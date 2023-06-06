@@ -23,7 +23,7 @@ HLK = $(RUN68) ${XDEV68K_DIR}/x68k_bin/hlk301.x
 TARGET_FILE = RSSN.X
 
 # Document file
-DOCUMENT_FILE = rssn.brd rssn.cnf rssn.tec
+DOCUMENT_FILE = rssn.def rssn.tec
 
 # Distribution package 
 PACKAGE_FILE = ../RSSN010.ZIP

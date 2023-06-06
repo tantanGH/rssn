@@ -4,19 +4,22 @@
 #include <stdint.h>
 #include "uart.h"
 
-#define MAX_RSS_LEN      (256)
-#define MAX_RSS_LEN_DESC (512)
+#define MAX_LINE_LEN      (256)
+#define MAX_TITLE_LEN     (256)
+#define MAX_LINK_LEN      (256)
+#define MAX_TIMESTAMP_LEN (256)
+#define MAX_SUMMARY_LEN   (512)
 
-#define PROPERTY_PREFIX_TITLE   "rss.channel.title."
-#define PROPERTY_PREFIX_LINK    "rss.channel.link."
+#define PARAM_TITLE    "rss.channel.title."
+#define PARAM_LINK     "rss.channel.link."
 
 typedef struct {
 
   uint32_t id;
 
-  uint8_t title[ MAX_RSS_LEN ];
-  uint8_t updated[ MAX_RSS_LEN ];
-  uint8_t summary[ MAX_RSS_LEN_DESC ];
+  uint8_t title[ MAX_TITLE_LEN ];
+  uint8_t updated[ MAX_TIMESTAMP_LEN ];
+  uint8_t summary[ MAX_SUMMARY_LEN ];
 
 } RSS_ITEM;
 
@@ -24,8 +27,8 @@ typedef struct {
 
   uint32_t id;
 
-  uint8_t title[ MAX_RSS_LEN ];
-  uint8_t link[ MAX_RSS_LEN ];
+  uint8_t title[ MAX_TITLE_LEN ];
+  uint8_t link[ MAX_LINK_LEN ];
 
   uint16_t num_items;
   RSS_ITEM* items;
@@ -34,14 +37,16 @@ typedef struct {
 
 typedef struct {
 
-  uint16_t num_channels;
+  int32_t num_channels;
   RSS_CHANNEL* channels;
 
-} RSS_BOARD;
+  int16_t use_high_memory;
 
-int32_t rss_board_open(RSS_BOARD* board, const char* board_file);
-void rss_board_close(RSS_BOARD* board);
+} RSS;
 
-int32_t rss_channel_download_items(RSS_CHANNEL* channel, UART* uart);
+int32_t rss_open(RSS* board, const char* board_file);
+void rss_close(RSS* board);
+
+int32_t rss_download_channel_items(RSS* rss, RSS_CHANNEL* channel, UART* uart);
 
 #endif

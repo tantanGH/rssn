@@ -6,113 +6,132 @@
 #include "uart.h"
 #include "rss.h"
 
-// ファイル読み込み用バッファ (関数内で確保しすぎると000機でアドレスエラーが発生することがあるので敢えて外出ししておく)
-static char linebuf[ MAX_RSS_LEN ];
+//
+//  helper: get parameter value
+//
+static inline char* rss_get_param_value(RSS* rss, char* line) {
 
-// find channel instance
-RSS_CHANNEL* rss_board_get_channel(RSS_BOARD* board, uint32_t channel_id) {
-  RSS_CHANNEL* channel = NULL;
-  for (int32_t i = 0; i < board->num_channels; i++) {
-    RSS_CHANNEL* ch = &(board->channels[i]);
-    if (ch->id == channel_id) {
-      channel = ch;
+  // 末尾のCR,LF,TAB,SPを削除しておく
+  // シフトJIS全角の2バイト目は 0x40～0x7e, 0x80～0xfc なので後ろから辿ってもセーフ
+  char* c = line + strlen(line) - 1;
+  while (c >= line) {
+    if (c[0] == '\r' || c[0] == '\n' || c[0] == '\t' || c[0] == ' ') {
+      c[0] = '\0';
+      c--;
+    } else {
       break;
-    }
-    if (ch->id == 0) {
-      ch->id = channel_id;
-      channel = ch;
-      break;
-    }
-  }
-  if (channel == NULL) printf("not found!\n");
-  return channel;
-}
-
-// get property value
-static inline char* rss_board_get_property_value(RSS_BOARD* board, char* str) {
-
-  // 末尾のCRLFを削除しておく
-  char* c = str + strlen(str) - 1;
-  if (c >= str) {
-    if (c[0] == '\r' || c[0] == '\n') c[0] = '\0';
-    c--;
-    if (c >= str) {
-      if (c[0] == '\r' || c[0] == '\n') c[0] = '\0';
     }
   }
 
   // 値が入っているところまでスキップ
-  c = str;
-  while ((c[0] >= '0' && c[0] <= '9') || c[0] == ' ' || c[0] == '\t' || c[0] == '=') {
+  c = line;
+  while ((c[0] >= '0' && c[0] <= '9') || c[0] == '\t' || c[0] == ' ' || c[0] == '=') {
     c++;
   }
 
   return c;
 }
 
-// open rss board
-int32_t rss_board_open(RSS_BOARD* board, const char* board_file) {
+//
+//  find a rss channel instance
+//
+RSS_CHANNEL* rss_get_channel(RSS* rss, uint32_t channel_id) {
 
+  RSS_CHANNEL* channel = NULL;
+
+  for (int32_t i = 0; i < rss->num_channels; i++) {
+    RSS_CHANNEL* ch = &(rss->channels[i]);
+    if (ch->id == channel_id) {
+      // 手持ちのリストの中に、指定された channel ID を持つものがあればそれを返す
+      channel = ch;
+      break;
+    }
+    if (ch->id == 0 && ch->title[0] == '\0' && ch->link[0] == '\0') {
+      // 未定義領域まで入ってしまったらそれをこのID用として設定して返す
+      ch->id = channel_id;
+      channel = ch;
+      break;
+    }
+  }
+
+  return channel;
+}
+
+//
+//  open rss
+//
+int32_t rss_open(RSS* rss, const char* channels_def_file) {
+
+  // default return code
   int32_t rc = -1;
 
+  // file handler
   FILE* fp = NULL;
 
-  board->num_channels = 0;
-  board->channels = NULL;
+  // baseline
+  rss->num_channels = 0;
+  rss->channels = NULL;
+
+  // ハイメモリが使えるならDMA関係ないので積極的に使う
+  rss->use_high_memory = himem_isavailable() ? 1 : 0;
 
   // phase 1: チャンネルの数を数えるだけ
-  fp = fopen(board_file, "r");
+  char linebuf[ MAX_LINE_LEN ];
+  int32_t n = 0;
+  fp = fopen(channels_def_file, "r");
   if (fp == NULL) {
-    printf("error: board file open error. (%s)\n", board_file);
+    printf("error: def file open error. (%s)\n", channels_def_file);
     goto exit;
   }
-  while (fgets(linebuf, MAX_RSS_LEN, fp) != NULL) {
-    if (memcmp(linebuf, PROPERTY_PREFIX_TITLE, sizeof(PROPERTY_PREFIX_TITLE) - 1) == 0) board->num_channels++;
+  while (fgets(linebuf, MAX_LINE_LEN, fp) != NULL) {
+    if (memcmp(linebuf, PARAM_TITLE, sizeof(PARAM_TITLE) - 1) == 0) n++;
   }
   fclose(fp);
   fp = NULL;
 
-  // 必要なメモリをヒープから確保して初期化
-  board->channels = himem_malloc( board->num_channels * sizeof(RSS_CHANNEL), 0);
-  memset(board->channels, 0, board->num_channels * sizeof(RSS_CHANNEL));
-  //printf("channels=%d\n", board->num_channels);
+  // 必要なメモリを確保して初期化
+  rss->num_channels = n;
+  rss->channels = himem_malloc( rss->num_channels * sizeof(RSS_CHANNEL), rss->use_high_memory);
+  memset(rss->channels, 0, rss->num_channels * sizeof(RSS_CHANNEL));
 
-  // phase 2: タイトルとURLの情報を読み込んで行く
-  fp = fopen(board_file, "r");
+  // phase 2: タイトルとリンク(URL)の情報を読み込んで行く
+  fp = fopen(channels_def_file, "r");
   if (fp == NULL) {
-    printf("error: board file open error. (%s)\n", board_file);
+    printf("error: def file open error. (%s)\n", channels_def_file);
     goto exit;
   }
-  while (fgets(linebuf, MAX_RSS_LEN, fp) != NULL) {
-    if (memcmp(linebuf, PROPERTY_PREFIX_TITLE, sizeof(PROPERTY_PREFIX_TITLE) - 1) == 0) {
-      int32_t channel_id = atoi(linebuf + sizeof(PROPERTY_PREFIX_TITLE) - 1);
+  while (fgets(linebuf, MAX_LINE_LEN, fp) != NULL) {
+    if (memcmp(linebuf, PARAM_TITLE, sizeof(PARAM_TITLE) - 1) == 0) {
+      int32_t channel_id = atoi(linebuf + sizeof(PARAM_TITLE) - 1);
       if (channel_id < 0 || channel_id > 65535) {
         printf("error: incorrect channel ID. (%d)\n", channel_id);
         goto exit;
       }
-      RSS_CHANNEL* ch = rss_board_get_channel(board, channel_id);
+      RSS_CHANNEL* ch = rss_get_channel(rss, channel_id);
       if (ch != NULL) {
-        char* value = rss_board_get_property_value(board, linebuf + sizeof(PROPERTY_PREFIX_TITLE) - 1);
+        char* value = rss_get_param_value(rss, linebuf + sizeof(PARAM_TITLE) - 1);
         if (value != NULL) {
           strcpy(ch->title, value);
         }
       }
     }
-    if (memcmp(linebuf, PROPERTY_PREFIX_LINK, sizeof(PROPERTY_PREFIX_LINK) - 1) == 0) {
-      int32_t channel_id = atoi(linebuf + sizeof(PROPERTY_PREFIX_LINK) - 1);
+    if (memcmp(linebuf, PARAM_LINK, sizeof(PARAM_LINK) - 1) == 0) {
+      int32_t channel_id = atoi(linebuf + sizeof(PARAM_LINK) - 1);
       if (channel_id < 0 || channel_id > 65535) {
         printf("error: incorrect channel ID. (%d)\n", channel_id);
         goto exit;
       }
-      RSS_CHANNEL* ch = rss_board_get_channel(board, channel_id);
+      RSS_CHANNEL* ch = rss_get_channel(rss, channel_id);
       if (ch != NULL) {
-        char* value = rss_board_get_property_value(board, linebuf + sizeof(PROPERTY_PREFIX_LINK) - 1);
+        char* value = rss_get_param_value(rss, linebuf + sizeof(PARAM_LINK) - 1);
         if (value != NULL) {
           strcpy(ch->link, value);
         }
       }
     }
   }
+  fclose(fp);
+  fp = NULL;
 
   rc = 0;
 
@@ -125,28 +144,41 @@ exit:
   return rc;
 }
 
-// close rss board
-void rss_board_close(RSS_BOARD* board) {
-  if (board->channels != NULL) {
-    himem_free(board->channels, 0);
-    board->channels = NULL;
-    board->num_channels = 0;
+//
+//  close rss
+//
+void rss_close(RSS* rss) {
+  if (rss->channels != NULL) {
+    // channel が items を持っていれば開放
+    for (int32_t i = 0; i < rss->num_channels; i++) {
+      if (rss->channels[i].items != NULL) {
+        himem_free(rss->channels[i].items, rss->use_high_memory);
+        rss->channels[i].num_items = 0;
+        rss->channels[i].items = NULL;
+      }
+    }
+    // channel自体を開放
+    himem_free(rss->channels, rss->use_high_memory);
+    rss->num_channels = 0;
+    rss->channels = NULL;
   }
 }
 
+// static buffers for RSSN APIs
 static uint8_t request_buf[ 1024 ];
 static uint8_t response_buf[ 1024 * 128 ];
 static uint8_t body_size_buf[ 16 ];
 
-int32_t rss_channel_download_items(RSS_CHANNEL* channel, UART* uart) {
+// RSSN API - download channel items
+int32_t rss_download_channel_items(RSS* rss, RSS_CHANNEL* channel, UART* uart) {
 
+  // default return code
   int32_t rc = -1;
-  size_t request_size = 0;
-  
+
   // request
   strcpy(request_buf, ">|        /items?link=");
   strcat(request_buf, channel->link);
-  request_size = strlen(request_buf);
+  size_t request_size = strlen(request_buf);
   sprintf(body_size_buf, "%08x", request_size - 10);
   memcpy(request_buf + 2, body_size_buf, 8);
   if (uart_write(uart, request_buf, request_size) != 0) {
@@ -187,9 +219,9 @@ int32_t rss_channel_download_items(RSS_CHANNEL* channel, UART* uart) {
   }
   channel->num_items = num_items;
   if (channel->items != NULL) {
-    himem_free(channel->items, 0);
+    himem_free(channel->items, rss->use_high_memory);
   }
-  channel->items = himem_malloc(sizeof(RSS_ITEM) * channel->num_items, 0);
+  channel->items = himem_malloc(sizeof(RSS_ITEM) * channel->num_items, rss->use_high_memory);
   for (size_t i = 0; i < channel->num_items; i++) {
     char* t1 = strchr(c+1, '\t');
     char* t2 = t1 != NULL ? strchr(t1 + 1, '\t') : NULL;

@@ -86,9 +86,8 @@ int32_t himem_resize(void* ptr, size_t size, int32_t use_high_memory) {
     return use_high_memory ? __himem_resize(ptr, size) : __mainmem_resize(ptr, size);
 }
 
-// check high memory availability
+// check high memory driver availability
 int32_t himem_isavailable() {
-  //int32_t v = B_LPEEK((uint32_t*)(0x000400 + 4 * 0xf8));   // check IOCS $F8 vector  
   int32_t v = INTVCG(0x1f8);
   return (v < 0 || (v >= 0xfe0000 && v <= 0xffffff)) ? 0 : 1;
 }

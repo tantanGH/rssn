@@ -46,6 +46,8 @@ RSSN.X を動かすX680x0実機と `rssnd` サーバ機を接続するために�
 
 必要に応じてさらに USB TypeA - TypeC ケーブルなどを追加してください。
 
+X68000Z と Raspberry Pi の組み合わせにおいては、UART端子同士を直結することが可能ですが、安定して 38400bps の通信を行うためには UART - USB 変換ケーブルを使うことをお勧めします。(UART:X68Z, USB:RasPi)
+
 ---
 
 # rssnd サーバのセットアップ

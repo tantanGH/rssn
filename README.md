@@ -10,6 +10,7 @@ RSS News Reader for X680x0/Human68k
 
 <img src='images/rssn2.jpeg' width='800'/>
 
+- emacs/vi風キーバインドで手に馴染むキーボード操作
 - RSSサイト定義ファイルサンプル同梱
 - ハイメモリ対応(使える状況にあれば自動的に使います)
 - X68000Z対応

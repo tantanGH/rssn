@@ -26,11 +26,11 @@ RSS News Reader for X680x0/Human68k
 
 # ハードウェアの準備
 
-`RSSN.X` を動かすX680x0実機と `rssnd` サーバを接続するために以下のケーブルを使います。
+`RSSN.X` を動かすX680x0実機と `rssnd` サーバ機を接続するために以下のケーブルを使います。
 
 1. RS232C 25pin オス - 9pin メス クロスケーブル
 
-[SANWA SUPPLY KRS-423XF-07K](https://amazon.co.jp/dp/B00008BBFQ) など、現在でも新品で購入可能です。ストレートケーブルと間違わないように。
+[SANWA SUPPLY KRS-423XF-07K](https://amazon.co.jp/dp/B00008BBFQ) など、現在でも新品で購入可能です。ストレートケーブルと間違わないように気をつけてください。
 
 2. RS232C 9pin オス - USB 変換ケーブル
 
@@ -39,3 +39,32 @@ RSS News Reader for X680x0/Human68k
 必要に応じてさらに USB TypeA - TypeC ケーブルなどを追加してください。
 
 ---
+
+# rssnd サーバのセットアップ
+
+---
+
+# RSSN.X のセットアップ
+
+
+---
+
+# 使い方
+
+
+---
+
+# RSSサイトリストの編集
+
+---
+
+# CUTファイルの利用
+
+
+---
+
+# Special Thanks
+
+---
+
+# 更新履歴

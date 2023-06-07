@@ -6,7 +6,9 @@ RSS News Reader for X680x0/Human68k
 
 # About This
 
-`RSSN.X` は、X680x0/Human68k 上で動作する、RSS News リーダーです。往年のパソコン通信BBS用オフラインログリーダーライクなUIを持ちながらも、オンラインで68側で指定したサイトのRSSフィードをブラウズすることが可能です。
+`RSSN.X` は、X680x0/Human68k 上で動作する、RSS News リーダーアプリケーションです。往年のパソコン通信BBS用オフラインログリーダーライクなUIを持ちながらも、オンラインで68側から指定したサイトのRSSフィードをブラウズすることが可能です。
+
+<img src='images/rssn2.jpeg' width='800'/>
 
 ただし、中継用にミニサーバ `rssnd` を68の外で動かす必要があります。これは Python で書かれており、Raspberry Piを含むLinux、macOS、Windowsなどの環境で動作させることができます。
 

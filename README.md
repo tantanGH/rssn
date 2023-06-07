@@ -10,10 +10,13 @@ RSS News Reader for X680x0/Human68k
 
 <img src='images/rssn2.jpeg' width='800'/>
 
+情報過多と言われるこの時代、エッセンスのみが抽出されたRSSで素早く多彩な情報をキャッチすることが可能です。
+
 - RSSサイト定義ファイルサンプル同梱
 - emacs/vi風キーバインドで手に馴染むキーボード操作
 - ハイメモリ対応(使える状況にあれば自動的に使います)
-- CUTファイル対応
+- 38400bps高速通信対応(要TMSIO.X)
+- CUTファイル対応(要CUT.R)
 - X68000Z対応
 
 ただし注意点として、データ中継用にミニサーバ `rssnd` を68の外で同時に動かしておく必要があります。`rssnd`は Python で書かれており、Raspberry Piを含むLinux、macOS、Windowsなどの環境で動作させることができます。以下は X68000XVI 実機と Raspberry Pi 4B を使った動作確認環境の構成例です。

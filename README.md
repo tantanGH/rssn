@@ -6,7 +6,7 @@ RSS News Reader for X680x0/Human68k
 
 # About This
 
-`RSSN.X` は、X680x0/Human68k 上で動作する、RSS News リーダーアプリケーションです。往年のパソコン通信BBS用オフラインログリーダーライクなUIを持ちながらも、オンラインで68側から指定したサイトのRSSフィードをブラウズすることが可能です。
+RSSN.X は、X680x0/Human68k 上で動作する、RSS News リーダーアプリケーションです。往年のパソコン通信BBS用オフラインログリーダーライクなUIを持ちながらも、オンラインで68側から指定したサイトのRSSフィードをブラウズすることが可能です。
 
 <img src='images/rssn2.jpeg' width='800'/>
 
@@ -23,13 +23,13 @@ RSS News Reader for X680x0/Human68k
 
 <img src='images/rssn1.png' width='800'/>
 
-`RSSN.X` は `rssnd` とRS232Cクロスで接続し通信を行います。(通信速度は設定可能です)
+RSSN.X は `rssnd` とRS232Cクロスで接続し通信を行います。(通信速度は設定可能です)
 
 ---
 
 # ハードウェアの準備
 
-`RSSN.X` を動かすX680x0実機と `rssnd` サーバ機を接続するために以下のケーブルを使います。
+RSSN.X を動かすX680x0実機と `rssnd` サーバ機を接続するために以下のケーブルを使います。
 
 1. RS232C 25pin オス - 9pin メス クロスケーブル
 

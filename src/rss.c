@@ -103,7 +103,7 @@ int32_t rss_open(RSS* rss, const char* channels_def_file) {
   while (fgets(linebuf, MAX_LINE_LEN, fp) != NULL) {
     if (memcmp(linebuf, PARAM_TITLE, sizeof(PARAM_TITLE) - 1) == 0) {
       int32_t channel_id = atoi(linebuf + sizeof(PARAM_TITLE) - 1);
-      if (channel_id < 0 || channel_id > 65535) {
+      if (channel_id < 1 || channel_id > 32767) {
         printf("error: incorrect channel ID. (%d)\n", channel_id);
         goto exit;
       }
@@ -117,7 +117,7 @@ int32_t rss_open(RSS* rss, const char* channels_def_file) {
     }
     if (memcmp(linebuf, PARAM_LINK, sizeof(PARAM_LINK) - 1) == 0) {
       int32_t channel_id = atoi(linebuf + sizeof(PARAM_LINK) - 1);
-      if (channel_id < 0 || channel_id > 65535) {
+      if (channel_id < 1 || channel_id > 32767) {
         printf("error: incorrect channel ID. (%d)\n", channel_id);
         goto exit;
       }
@@ -182,30 +182,33 @@ int32_t rss_download_channel_items(RSS* rss, RSS_CHANNEL* channel, UART* uart) {
   sprintf(body_size_buf, "%08x", request_size - 10);
   memcpy(request_buf + 2, body_size_buf, 8);
   if (uart_write(uart, request_buf, request_size) != 0) {
-    printf("error: request write error.\n");
+    //printf("error: request write error.\n");
     goto exit;
   }
 
   // response
-  if (uart_read(uart, response_buf, 14) != 0) {
-    printf("error: response read error.\n");
+  int32_t uart_result = uart_read(uart, response_buf, 14);
+  if (uart_result != UART_OK) {
+    rc = uart_result;
     goto exit;
   }
   if (memcmp(response_buf, "<|0200", 6) != 0) {
-    printf("error: unexpected error code.\n");
+    //printf("error: unexpected error code.\n");
     goto exit;
   }
 
   size_t response_size;
   sscanf(response_buf + 6, "%08x", &response_size);
   if (response_size > 1024 * 128 - 16) {
-    printf("error: too large response.\n");
+    //printf("error: too large response.\n");
     goto exit;
   }
-  if (uart_read(uart, response_buf + 14, response_size) != 0) {
-    printf("error: response body read error.\n");
+  uart_result = uart_read(uart, response_buf + 14, response_size);
+  if (uart_result != UART_OK) {
+    rc = uart_result;
     goto exit;
   }
+
   char* c = strchr(response_buf + 14, '\n');
   if (c == NULL) {
     printf("error: unexpected response body.\n");
@@ -223,16 +226,19 @@ int32_t rss_download_channel_items(RSS* rss, RSS_CHANNEL* channel, UART* uart) {
   }
   channel->items = himem_malloc(sizeof(RSS_ITEM) * channel->num_items, rss->use_high_memory);
   for (size_t i = 0; i < channel->num_items; i++) {
-    char* t1 = strchr(c+1, '\t');
+    char* t1 = strchr(c + 1, '\t');
     char* t2 = t1 != NULL ? strchr(t1 + 1, '\t') : NULL;
     char* t3 = t2 != NULL ? strchr(t2 + 1, '\n') : NULL;
+//    char* t4 = t3 != NULL ? strchr(t3 + 1, '\n') : NULL;
     if (t3 == NULL) break;
     *t1 = '\0';
     *t2 = '\0';
     *t3 = '\0';
-    strcpy(channel->items[i].title, c+1);
-    strcpy(channel->items[i].updated, t1+1);
-    strcpy(channel->items[i].summary, t2+1);
+//    *t4 = '\0';
+    strcpy(channel->items[i].title,    c + 1);
+    strcpy(channel->items[i].updated, t1 + 1);
+//    strcpy(channel->items[i].author,  t2 + 1);
+    strcpy(channel->items[i].summary, t2 + 1);
     c = t3;
   }
 
@@ -241,4 +247,20 @@ int32_t rss_download_channel_items(RSS* rss, RSS_CHANNEL* channel, UART* uart) {
 exit:
 
   return rc;
+}
+
+RSS_CHANNEL* rss_get_prev_channel(RSS* rss, RSS_CHANNEL* channel) {
+  RSS_CHANNEL* prev_channel = channel - 1;
+  if (prev_channel < rss->channels) {
+    prev_channel = rss->channels + rss->num_channels - 1;
+  }
+  return prev_channel;
+}
+
+RSS_CHANNEL* rss_get_next_channel(RSS* rss, RSS_CHANNEL* channel) {
+  RSS_CHANNEL* next_channel = channel + 1;
+  if (next_channel >= rss->channels + rss->num_channels) {
+    next_channel = rss->channels;
+  }
+  return next_channel;
 }

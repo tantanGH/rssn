@@ -5,6 +5,7 @@
 #include <doslib.h>
 #include <iocslib.h>
 #include "himem.h"
+#include "keyboard.h"
 #include "uart.h"
 
 static inline void e_set232c(int32_t mode) {
@@ -84,6 +85,13 @@ int32_t uart_open(UART* uart, int32_t baud_rate, int32_t timeout) {
       }
       speed = 9;
       break;
+    case 57600:
+      if (uart->tmsio == 0) {
+        printf("error: need TMSIO.X for 57600bps use.\n");
+        goto exit;
+      }
+      speed = 0x0d;
+      break;
     default:
       printf("error: unsupported baud rate.\n");
       goto exit;      
@@ -142,7 +150,7 @@ int32_t uart_write(UART* uart, uint8_t* buffer, size_t len) {
     while (OSNS232C() == 0) {
       uint32_t t1 = ONTIME();
       if ((t1 - t0) > timeout) {
-        printf("error: transfer timeout.\n");
+        //printf("error: transfer timeout.\n");
         goto exit;
       }
     }
@@ -173,12 +181,23 @@ int32_t uart_read(UART* uart, uint8_t* buffer, size_t len) {
     }
     uint32_t t1 = ONTIME();
     if ((t1 - t0) > timeout) {
-      printf("error: transfer timeout.\n");
+      rc = UART_TIMEOUT;
       goto exit;
+    }
+
+    if (B_KEYSNS() != 0) {
+      int16_t scan_code = B_KEYINP() >> 8;
+      if (scan_code == KEY_SCAN_CODE_ESC) {
+        rc = UART_QUIT;
+        goto exit;
+      } else if (scan_code == KEY_SCAN_CODE_F10) {
+        rc = UART_EXIT;
+        goto exit;
+      }
     }
   }
 
-  rc = 0;
+  rc = UART_OK;
 
 exit:
   return rc;

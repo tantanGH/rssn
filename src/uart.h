@@ -3,6 +3,11 @@
 
 #define UART_BUFFER_SIZE (64*1024)
 
+#define UART_OK       (0)
+#define UART_EXIT     (1)
+#define UART_QUIT     (2)
+#define UART_TIMEOUT  (3)
+
 typedef struct {
 
   int16_t tmsio;

@@ -29,7 +29,7 @@ def respond(port, code, body=""):
 
   code_str = '<|{:04d}'.format(code)
 
-  body_bytes = body.encode('cp932')
+  body_bytes = body.encode('cp932', errors="backslashreplace")
   body_len = len(body_bytes)
   body_len_str = '{:08x}'.format(body_len)
 
@@ -41,7 +41,7 @@ def respond(port, code, body=""):
   port.flush()
 
 # service loop
-def run_service(serial_device, serial_baudrate, verbose):
+def run_service(serial_device, serial_baudrate, max_entries, verbose):
 
   # set signal handler
   signal.signal(signal.SIGINT, sigint_handler)
@@ -102,16 +102,19 @@ def run_service(serial_device, serial_baudrate, verbose):
         # get RSS feed from Internet
         feed = feedparser.parse(request_body_str[12:])
 
-        res = str(len(feed.entries)) + "\n"
-        for e in feed.entries:
+        entries = feed.entries[:max_entries]
+
+        res = str(len(entries)) + "\n"
+        for e in entries:
           t = time.mktime(e.updated_parsed) + 9 * 3600
           dt = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S %a')
           s = e.summary if hasattr(e, 'summary') else ""
           #a = e.author if hasattr(e, 'author') else ""
+          #res += e.title + "\t" + dt + "\t" + a + "\t" + s + "\n"
           res += e.title + "\t" + dt + "\t" + s + "\n"
 
         if verbose:
-          print(res)
+          print(f"returned {len(entries)} items.")
 
         respond(port, RESPONSE_OK, res)
 
@@ -129,11 +132,12 @@ def main():
 
     parser.add_argument("-d","--device", help="serial device name", default='/dev/serial0')
     parser.add_argument("-s","--baudrate", help="baud rate", type=int, default=19200)
+    parser.add_argument("-e","--entries", help="max item entries", type=int, default=100)
     parser.add_argument("-v","--verbose", help="verbose mode", action='store_true', default=False)
-
+ 
     args = parser.parse_args()
 
-    run_service(args.device, args.baudrate, args.verbose)
+    run_service(args.device, args.baudrate, args.entries, args.verbose)
 
 
 if __name__ == "__main__":

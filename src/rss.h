@@ -8,6 +8,7 @@
 #define MAX_TITLE_LEN     (256)
 #define MAX_LINK_LEN      (256)
 #define MAX_TIMESTAMP_LEN (256)
+//#define MAX_AUTHOR_LEN    (128)
 #define MAX_SUMMARY_LEN   (512)
 
 #define PARAM_TITLE    "rss.channel.title."
@@ -19,6 +20,7 @@ typedef struct {
 
   uint8_t title[ MAX_TITLE_LEN ];
   uint8_t updated[ MAX_TIMESTAMP_LEN ];
+//  uint8_t author[ MAX_AUTHOR_LEN ];
   uint8_t summary[ MAX_SUMMARY_LEN ];
 
 } RSS_ITEM;
@@ -47,6 +49,14 @@ typedef struct {
 int32_t rss_open(RSS* board, const char* board_file);
 void rss_close(RSS* board);
 
+#define RSS_OK       (0)
+#define RSS_EXIT     (1)
+#define RSS_QUIT     (2)
+#define RSS_TIMEOUT  (3)
+
 int32_t rss_download_channel_items(RSS* rss, RSS_CHANNEL* channel, UART* uart);
+
+RSS_CHANNEL* rss_get_prev_channel(RSS* rss, RSS_CHANNEL* channel);
+RSS_CHANNEL* rss_get_next_channel(RSS* rss, RSS_CHANNEL* channel);
 
 #endif

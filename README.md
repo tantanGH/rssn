@@ -52,9 +52,90 @@ X68000Z と Raspberry Pi の組み合わせにおいては、UART端子同士を
 
 # rssnd サーバのセットアップ
 
+## Raspbery Pi (Linux)
+
+gitをインストール
+
+    sudo apt install git
+
+rssndをインストール
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+pipがなければpip3を使う。
+
+動作確認
+
+    rssnd --help
+
+USB-Serialケーブルを挿した状態で、デバイスの存在を確認
+
+    ls -alF /dev/ttyUSB*
+
+rssnd起動
+
+    rssnd -d /dev/ttyUSB0 -s 38400 -v
+
+
+## macOS
+
+[Homebrew](https://brew.sh/)をインストール
+
+gitをインストール
+
+    brew install git
+
+rssndをインストール
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+pipがなければpip3を使う。
+
+動作確認
+
+    rssnd --help
+
+USB-Serialケーブルを挿した状態で、デバイスの存在を確認
+
+    ls -alF /dev/tty.usb*
+
+rssn起動
+
+    rssn -d /dev/tty.usbserial-xxxx -s 38400 -v
+
+## Windows
+
+[Windowsユーザ向けPython導入ガイド](https://github.com/tantanGH/distribution/blob/main/windows_python_for_x68k.md) に従って Python, git を導入
+
+rssndをインストール
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+動作確認
+
+    rssnd --help
+
+USB - Serial ケーブルを挿し、コントロールパネルで COM1 として使えるようにしておく。(ケーブル付属のマニュアルなど参照)
+
+起動
+
+    rssnd -d COM1 -s 38400 -v
+
 ---
 
 # RSSN.X のセットアップ
+
+RSSNxxx.ZIP をダウンロードし、テンポラリディレクトリに展開する。
+
+- RSSN.X ... 実行ファイル。パスの通ったディレクトリに置く。
+- RSSN.DEF ... デフォルトのRSSサイト定義ファイル
+- RSSN.CUT ... CUTファイルのサンプル
+
+TMSIO.X
+
+CUT.R
+
+USB - RS232C クロスケーブルが接続された状態で、
 
 
 ---

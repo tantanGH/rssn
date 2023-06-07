@@ -16,11 +16,11 @@ RSS News Reader for X680x0/Human68k
 - CUTファイル対応
 - X68000Z対応
 
-ただし、データ中継用にミニサーバ `rssnd` を68の外で動かす必要があります。これは Python で書かれており、Raspberry Piを含むLinux、macOS、Windowsなどの環境で動作させることができます。
-
-`RSSN.X` は `rssnd` とRS232Cクロスで接続し通信を行います。
+ただし注意点として、データ中継用にミニサーバ `rssnd` を68の外で同時に動かしておく必要があります。`rssnd`は Python で書かれており、Raspberry Piを含むLinux、macOS、Windowsなどの環境で動作させることができます。以下は X68000XVI 実機と Raspberry Pi 4B を使った動作確認環境の構成例です。
 
 <img src='images/rssn1.png' width='800'/>
+
+`RSSN.X` は `rssnd` とRS232Cクロスで接続し通信を行います。(通信速度は設定可能です)
 
 ---
 

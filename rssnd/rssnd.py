@@ -1,5 +1,5 @@
-import argparse
 import os
+import argparse
 import time
 import datetime
 import signal
@@ -16,7 +16,7 @@ RESPONSE_NOT_FOUND              = 404
 RESPONSE_INTERNAL_SERVER_ERROR  = 500
 RESPONSE_SERVICE_UNAVAILABLE    = 503
 
-# horizontal bar
+# horizontal bar (DSHELLの改区に対応するコードで作る)
 HORIZONTAL_BAR = bytes([0x84, 0xaa]).decode('cp932') * 47
 
 # abort flag
@@ -104,27 +104,6 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
           print(f"response: [{API_VERSION}]")
         respond(port, RESPONSE_OK, API_VERSION)
 
-      # request handler - items
-#      elif request_body_str.startswith("/items?link="):
-
-        # get RSS feed from Internet
-#        feed = feedparser.parse(request_body_str[12:])
-
-#        entries = feed.entries[:max_entries]
-
-#        res = str(len(entries)) + "\n"
-#        for e in entries:
-#          tm = time.mktime(e.updated_parsed) + 9 * 3600
-#          dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
-#          t = e.title if hasattr(e, 'title') else ""
-#          s = e.summary if hasattr(e, 'summary') else ""
-#          res += t + "\t" + dt + "\t" + s + "\n"
-
-#        if verbose:
-#          print(f"returned {len(entries)} items.")
-
-#        respond(port, RESPONSE_OK, res)
-
       # request handler - dshell
       elif request_body_str.startswith("/dshell?link="):
 
@@ -133,6 +112,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
 
         res = ""
 
+        # 極端なレスポンスの悪化を避けるため、記事は max_entries で指定された数だけにする(デフォルト100)
         entries = feed.entries[:max_entries]
         for e in entries:
 
@@ -146,6 +126,9 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
           ofs_bytes = 0
           num_chars = 0
 
+          # タイトルを24dotフォントで表示する場合、折り返しが発生すると表示が重なってしまう。
+          # そのためいい感じのところで行を切り、1行空行を間に挟むようにする。
+          # この時 SJIS にして桁数を計算した上で、元の UTF8 の文字列を該当位置でカットする必要がある。
           while len(title_sjis_bytes) > 62:
 
             c = title_sjis_bytes[ ofs_bytes ]
@@ -161,6 +144,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
               ofs_bytes = 0
               num_chars = 0
 
+          # 残りのタイトルと日付、本文、横barを出力
           res += f"""
 %V%W{t}\u0018
 
@@ -171,6 +155,8 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
 
 {HORIZONTAL_BAR}
 """
+
+        # 最後の記事の後には [EOF] マーカーを出力しておく
         res += "\n[EOF]\n"
 
         if verbose:

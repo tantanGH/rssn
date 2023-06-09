@@ -28,6 +28,13 @@ RSSN は、X680x0/Human68k 上で動作する、RSS News Reader Systemです。
 
 <img src='images/rssn2.png' width='800px'/>
 
+
+以下での動作を確認しています。
+
+- X68030/060turbo(50MHz) + M1 MacBook Air
+- X68000XVI(16MHz) + Raspberry Pi 4B
+- X68000Z(10MHz) + Raspberry Pi 4B
+
 ---
 
 ## インストール方法

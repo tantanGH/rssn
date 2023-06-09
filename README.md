@@ -21,6 +21,9 @@ RSSN は、X680x0/Human68k 上で動作する、RSS News Reader Systemです。
 
 <img src='images/rssn3.png' width='800px'/>
 
+<br/>
+<br/>
+
 ただし注意点として、データ中継用にミニサーバ `rssnd` を68の外で同時に動かしておく必要があります。`rssnd` は Python で書かれており、Raspberry Piを含むLinux、macOS、Windowsなどの環境で動作させることができます。
 
 <img src='images/rssn2.png' width='800px'/>

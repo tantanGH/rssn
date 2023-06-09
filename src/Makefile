@@ -22,8 +22,8 @@ HLK = $(RUN68) ${XDEV68K_DIR}/x68k_bin/hlk301.x
 # 実行ファイル名
 TARGET_FILE = RSSN.X
 
-# Document file
-DOCUMENT_FILE = README.TXT INDEX.DOC SETUP.DOC SETUPZ.DOC RSSN.CUT
+# Resource files
+RESOURCE_FILES = resources/INDEX.DOC resources/SETUP.DOC resources/SETUPZ.DOC resources/RSSN.CUT
 
 # Distribution package 
 PACKAGE_FILE = ../RSSN050.ZIP
@@ -43,7 +43,7 @@ C_SRCS = himem.c uart.c rss.c main.c
 ASM_SRCS =
 
 # *.h source files
-HEADER_SRCS = himem.h uart.h rss.h rssn.h
+HEADER_SRCS = himem.h uart.h rss.h
 
 # リンク対象のライブラリファイル
 LIBS =\
@@ -102,4 +102,4 @@ $(INTERMEDIATE_DIR)/%.o : %.s Makefile
 	$(HAS) -e -u -w0 $(INCLUDE_FLAGS) $*.s -o $(INTERMEDIATE_DIR)/$*.o
 
 package:
-	zip -j ${PACKAGE_FILE} ${INTERMEDIATE_DIR}/${TARGET_FILE} ${DOCUMENT_FILE} 
+	zip -j ${PACKAGE_FILE} ${INTERMEDIATE_DIR}/${TARGET_FILE} ${RESOURCE_FILES} 

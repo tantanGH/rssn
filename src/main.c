@@ -4,27 +4,26 @@
 #include <string.h>
 #include <doslib.h>
 #include <iocslib.h>
+#include "uart.h"
 #include "rss.h"
-#include "rssn.h"
+
+#define PROGRAM_VERSION "0.5.0"
+
 //
 //  helper: vdisp interrupt handler for progress bar display
 //
 static uint32_t vdisp_counter;
 static void __attribute__((interrupt)) vdisp_handler() {
 
-  vdisp_counter++;
+  int16_t c = vdisp_counter;
 
-  int16_t c = ( vdisp_counter + 1 ) % 32;
-  vdisp_counter = c;
-  if (c == 0 || c == 16) {
-    B_ERA_AL();
-    B_PRINT("\r");
-  }
   if (c < 16) {
-    B_PRINT(">");
+    B_PUTMES(7, 31 + c, 31, 0, ">");
   } else {
-    B_PRINT("_");
+    B_PUTMES(7, 31 + c - 16, 31, 0, "_");
   }  
+
+  vdisp_counter = ( vdisp_counter + 1 ) % 32;
 }
 
 //
@@ -34,26 +33,33 @@ static void show_help_message() {
   printf("RSSN.X - RSSN client for X680x0/Human68k version " PROGRAM_VERSION " by tantan\n");
   printf("usage: rssn [options] <rss-url> [output-file]\n");
   printf("options:\n");
-  printf("     -s <speed> ... baud rate (9600/19200/38400/57600) (default:38400)\n");
+  printf("     -s <speed> ... baud rate (9600/19200/38400) (default:38400)\n");
   printf("     -h         ... show help message\n");
 }
+
+// env var buffers
+static uint8_t env_rssn_speed[ 256 ];
+static uint8_t env_rssn_timeout[ 256 ];
 
 //
 //  main
 //
-int32_t main(int32_t argc, char* argv[]) {
+int32_t main(int32_t argc, uint8_t* argv[]) {
 
   // default return code
   int32_t rc = -1;
 
   // baud rate
-  int32_t baud_rate = 38400;
+  int32_t baud_rate = GETENV("RSSN_SPEED", NULL, env_rssn_speed) >= 0 ? atoi(env_rssn_speed) : 38400;
+
+  // timeout
+  int32_t timeout = GETENV("RSSN_TIMEOUT", NULL, env_rssn_timeout) >= 0 ? atoi(env_rssn_timeout) : 60;
 
   // rss url
-  char* rss_url = NULL;
+  uint8_t* rss_url = NULL;
 
   // output file name
-  char output_file_name[ 256 ];
+  uint8_t output_file_name[ 256 ];
   strcpy(output_file_name, "_R.D");
 
   // output file handle
@@ -73,7 +79,7 @@ int32_t main(int32_t argc, char* argv[]) {
     if (argv[i][0] == '-' && strlen(argv[i]) >= 2) {
       if (argv[i][1] == 's' && i+1 < argc) {
         baud_rate = atoi(argv[i+1]);
-        if (baud_rate != 9600 && baud_rate != 19200 && baud_rate != 38400 && baud_rate != 57600) {
+        if (baud_rate != 9600 && baud_rate != 19200 && baud_rate != 38400) {
           printf("error: unknown baud rate.\n");
           goto exit;
         }
@@ -103,12 +109,12 @@ try:
 
   // cursor off
   C_CUROFF();
+
+  // function key off
   C_FNKMOD(3);
-  B_CLR_AL();
-  B_LOCATE(0, 29);
 
   // open uart  
-  if (uart_open(&uart, baud_rate, 60) != 0) {
+  if (uart_open(&uart, baud_rate, timeout) != 0) {
     goto catch;
   }
 
@@ -123,7 +129,7 @@ try:
   } 
 
   // message
-  B_PRINT("Downloading data... [ESC] to cancel.\r\n");
+  B_PUTMES(7, 0, 31, 32, "Now Loading... [ESC] to cancel ");
 
   // vsync interrupt for progress bar
   VDISPST((uint8_t*)vdisp_handler, 0, 55);
@@ -157,13 +163,15 @@ catch:
   // close uart
   uart_close(&uart);
 
-  // remove file
+  // remove file in error cases
   if (rc != 0) {
     DELETE(output_file_name);
   }
 
   // cursor on
   C_CURON();
+
+  // resume function key mode
   C_FNKMOD(func_mode);
 
 exit:

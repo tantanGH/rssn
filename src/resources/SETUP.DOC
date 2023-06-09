@@ -1,0 +1,193 @@
+
+%V%W RSSN ƒZƒbƒgƒAƒbƒv (ŽÀ‹@—p)
+
+
+ ‚±‚ê‚Í RSSN ‚ð X680x0 ŽÀ‹@Œü‚¯‚ÉƒZƒbƒgƒAƒbƒv‚·‚éÛ‚Ìˆê”Ê“I‚ÈŽè‡‚ð‚Ü‚Æ‚ß‚½‚à‚Ì‚Å‚·B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W •K—v‚Èƒ\ƒtƒgƒEƒFƒA
+
+
+[37m1. TMSIO.X[m
+
+ ‚‘¬RS232Cƒhƒ‰ƒCƒo‚Å‚ ‚é TMSIO.X ‚ª38400bps’ÊM‚É•K—v‚Å‚·BX68000 LIBRARY ‚È‚Ç‚©‚ç“üŽè‚µ‚Ä‘g‚Ýž‚ñ‚Å‚¨‚¢‚Ä‚­‚¾‚³‚¢B
+
+
+ ’ˆÓ: 
+  - ƒ³RSDRV.SYS‚ÍÅ‘å’ÊM‘¬“x‚ª19200bps‚È‚Ì‚Å‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
+  - TMSIO.X ‚ðÅ“K‰»‚µ‚½ BSIO.X ‚Íƒn[ƒhƒEƒFƒAƒtƒ[§ŒäŒÅ’è‚È‚Ì‚Å‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
+
+
+[37m2. DSHELL.X[m
+
+ ƒ†[ƒU[ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Æ‚È‚é DSHELL.X ‚ª•K—v‚Å‚·BÌ‚Ì“d”]‹äŠy•”‚É“Y•t‚³‚ê‚Ä‚¢‚½‚à‚Ì‚Å‘åä•v‚Å‚·‚ªAƒo[ƒWƒ‡ƒ“3.xx‚ðŽg‚Á‚Ä‚­‚¾‚³‚¢B‚ ‚Ü‚èŒÃ‚¢‚Æ‘Î‰ž‚Å‚«‚Ä‚¢‚È‚¢‰Â”\«‚ª‚ ‚è‚Ü‚·B
+
+
+[37m3. RSSN ”z•zƒpƒbƒP[ƒW[m
+
+ RSSNxxx.ZIP ‚ðˆÈ‰º‚©‚çƒ_ƒEƒ“ƒ[ƒh‚µ‚ÄAV‹KƒfƒBƒŒƒNƒgƒŠ‚É“WŠJ‚µ‚Ä‚¨‚¢‚Ä‚­‚¾‚³‚¢B
+ 
+  https://github.com/tantanGH/rssn/
+
+
+ RSSN ‚Ì‹N“®‚Í“WŠJ‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚ðƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚É‚µ‚ÄA
+
+  dshell index.doc
+
+ ‚Å‚·BrssndƒT[ƒo‚ª‹N“®‚µ‚Ä‚¢‚È‚¢ó‘Ô‚Å‚àARSSƒTƒCƒgˆê——‚âƒZƒbƒgƒAƒbƒvƒ}ƒjƒ…ƒAƒ‹‚ðŒ©‚é‚±‚Æ‚Í‰Â”\‚Å‚·B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W •K—v‚Èƒn[ƒhƒEƒFƒA
+
+
+[37m1. DSHELL.X ‚¨‚æ‚Ñ RSSN.X ‚ð“®‚©‚· X680x0 ŽÀ‹@‚Æƒ}ƒEƒX[m
+
+ DSHELL ‚ÍƒL[ƒ{[ƒh‚âƒWƒ‡ƒCƒXƒeƒBƒbƒN‚Å‚à‘€ì‚Å‚«‚Ü‚·‚ªAƒ}ƒEƒX‚Ì—˜—p‚ð‚¨‚·‚·‚ß‚µ‚Ü‚·B
+
+
+[37m2. rssnd (ƒT[ƒoƒvƒƒOƒ‰ƒ€) ‚ð“®‚©‚· Linux / macOS / Windows ‹@[m
+
+ ƒT[ƒoƒvƒƒOƒ‰ƒ€‚Å‚ ‚é rssnd ‚Í Python ‚Å‘‚©‚ê‚Ä‚¢‚é‚½‚ßAPython ‚ª“®‚¢‚ÄƒCƒ“ƒ^[ƒlƒbƒg‚ÉƒAƒNƒZƒX‰Â”\‚ÈŠÂ‹«‚Å‚ ‚ê‚Î‘åä•v‚Å‚·BŽèŒ³‚Ì Raspberry Pi 4B ‚Å‚à•’Ê‚É“®ì‚µ‚Ü‚µ‚½B
+
+
+[37m3. ã‹L2‚Â‚ðÚ‘±‚·‚é‚½‚ß‚ÌƒP[ƒuƒ‹[m
+
+ ƒP[ƒuƒ‹‚Í’Êí2–{•K—v‚É‚È‚è‚Ü‚·B
+
+
+ [37ma. RS232CƒNƒƒXƒP[ƒuƒ‹[m
+
+  X680x0 ‚Ìƒ³RS232CƒRƒlƒNƒ^‚Í 25pin ƒƒX‚Å‚·Bˆê•û‚ÅÅ‹ß‚Ìˆê”Ê“I‚ÈRS232CƒRƒlƒNƒ^‚Í 9pin ‚Å‚·‚Ì‚ÅA‚±‚ê‚ç‚Ì•ÏŠ·‚ÆƒNƒƒXÚ‘±‚ª“¯Žž‚É‚Å‚«‚éƒP[ƒuƒ‹A—á‚¦‚ÎˆÈ‰º‚Ì»•i‚È‚Ç‚ª‚¨Š©‚ß‚Å‚·B
+
+   [36mSANWA SUPPLY KRS-423XF-07K[m
+
+
+ [37mb. RS232C - USB•ÏŠ·ƒXƒgƒŒ[ƒgƒP[ƒuƒ‹[m
+
+  RS232C 9pin ‚ð USB ‚É•ÏŠ·‚·‚é‚½‚ß‚ÌƒP[ƒuƒ‹‚Å‚·B‚±‚¿‚ç‚ÍƒXƒgƒŒ[ƒgƒP[ƒuƒ‹‚É‚È‚è‚Ü‚·BƒNƒƒX‚ÆƒXƒgƒŒ[ƒg‚ª‹t‚É‚È‚Á‚Ä‚à\‚¢‚Ü‚¹‚ñ‚ªA—¼•ûƒNƒƒXA—¼•ûƒXƒgƒŒ[ƒg‚Å‚Í“®ì‚µ‚Ü‚¹‚ñB
+
+  ŒÂl“I‚É‚Í‘Š«–â‘è‚Ì­‚È‚¢ FTDIƒ`ƒbƒvƒZƒbƒg‚ðŽg‚Á‚½‚à‚Ì‚ð‚¨Š©‚ß‚µ‚Ü‚·B
+
+
+ [37mc. USB Type-A to Type-C •ÏŠ·ƒP[ƒuƒ‹[m
+
+  ê‡‚É‚æ‚Á‚Ä‚Í‚±‚¿‚ç‚àŽg‚¤•K—v‚ª‚ ‚è‚Ü‚·B
+
+
+•K—v‚Èƒn[ƒhƒEƒFƒA‚ÍˆÈã‚É‚È‚è‚Ü‚·B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W rssd ƒT[ƒo‚ÌƒZƒbƒgƒAƒbƒv (Linux/Raspberry PiŒü‚¯)
+
+
+ git‚ª“ü‚Á‚Ä‚È‚¯‚ê‚ÎƒCƒ“ƒXƒg[ƒ‹
+
+    sudo apt install git
+
+ rssnd‚ðGithub‚©‚çƒCƒ“ƒXƒg[ƒ‹(pip‚ª‚È‚¯‚ê‚Îpip3‚ðŽg‚¤)
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+
+ ƒCƒ“ƒXƒg[ƒ‹Šm”F
+
+    rssnd --help
+
+ USB-RS232CƒP[ƒuƒ‹‚ð‘}‚µ‚½ó‘Ô‚ÅAƒfƒoƒCƒX‚Ì‘¶Ý‚ðŠm”F
+
+    ls -alF /dev/ttyUSB?
+
+
+ rssnd‹N“®(ƒtƒHƒAƒOƒ‰ƒEƒ“ƒh)
+
+    rssnd -d /dev/ttyUSB? -s 38400 -v
+
+ ’âŽ~‚·‚é‚É‚ÍCTRL+C‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+
+ rssnd‹N“®(ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh)
+
+    nohup rssnd -d /dev/ttyUSB? -s 38400 -v > log-rssnd &
+
+ ’âŽ~‚·‚é‚É‚Íkill‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W rssd ƒT[ƒo‚ÌƒZƒbƒgƒAƒbƒv (macOSŒü‚¯)
+
+
+ Homebrew (https://brew.sh/) ‚ª“ü‚Á‚Ä‚¢‚È‚¯‚ê‚ÎƒTƒCƒg‚ÌŽwŽ¦‚É]‚¢ƒCƒ“ƒXƒg[ƒ‹
+
+ git‚ª“ü‚Á‚Ä‚È‚¯‚ê‚ÎƒCƒ“ƒXƒg[ƒ‹
+
+    brew install git
+
+ rssnd‚ðƒCƒ“ƒXƒg[ƒ‹(pip‚ª‚È‚¯‚ê‚Îpip3‚ðŽg‚¤)
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+
+ ƒCƒ“ƒXƒg[ƒ‹Šm”F
+
+    rssnd --help
+
+ USB-RS232CƒP[ƒuƒ‹‚ð‘}‚µ‚½ó‘Ô‚ÅAƒfƒoƒCƒX‚Ì‘¶Ý‚ðŠm”F
+
+    ls -alF /dev/tty.usbserial-*
+
+
+ rssnd‹N“®(ƒtƒHƒAƒOƒ‰ƒEƒ“ƒh)
+
+    rssnd -d /dev/tty.usbserial-* -s 38400 -v
+
+ ’âŽ~‚·‚é‚É‚ÍCTRL+C‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+ rssnd‹N“®(ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh)
+
+    nohup rssnd -d /dev/tty.usbserial-* -s 38400 -v > log-rssnd &
+
+ ’âŽ~‚·‚é‚É‚Íkill‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W rssd ƒT[ƒo‚ÌƒZƒbƒgƒAƒbƒv (WindowsŒü‚¯)
+
+
+³’¼Windows‚Í‚ ‚Ü‚èŽg‚¤‹@‰ï‚à–³‚¢‚Ì‚Å‚æ‚­•ª‚©‚ç‚È‚¢‚Ì‚Å‚·‚ª(”š)AŽ©•ª‚Ì‘‚¢‚½Python“±“üƒ}ƒjƒ…ƒAƒ‹‚ª‚ ‚è‚Ü‚·B
+
+  https://github.com/tantanGH
+
+‚±‚¿‚ç‚Ì–ÚŽŸ‚Ì‰º‚Ì•û‚É Windowsƒ†[ƒUŒü‚¯Python“±“üƒKƒCƒh ‚ª‚ ‚è‚Ü‚·‚Ì‚Å‚»‚ê‚É]‚Á‚Ä git ‚¨‚æ‚Ñ Python ‚ð“±“ü‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+rssnd‚ðƒCƒ“ƒXƒg[ƒ‹
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+USB-RS232CƒP[ƒuƒ‹‚ð‘}‚µ‚½ó‘Ô‚ÅAƒRƒ“ƒgƒ[ƒ‹ƒpƒlƒ‹‚È‚Ç‚©‚ç³‚µ‚­COM?‚Æ‚µ‚Ä”FŽ¯‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ðŠm”F‚µ‚Ü‚·B
+(‚·‚Ý‚Ü‚¹‚ñAÚ×‚í‚©‚è‚Ü‚¹‚ñ)
+
+
+“®ìŠm”F
+
+    rssnd --help
+
+rssnd‹N“®(ƒtƒHƒAƒOƒ‰ƒEƒ“ƒh)
+
+    rssnd -d COM? -s 38400 -v
+
+COM? ‚Í USB-Seiral ‚ÌƒfƒoƒCƒX–¼‚ðŽw’è‚µ‚Ä‚­‚¾‚³‚¢B
+’âŽ~‚·‚é‚É‚ÍCTRL+C‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+[EOF]

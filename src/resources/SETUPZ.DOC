@@ -1,0 +1,210 @@
+
+%V%W RSSN ƒZƒbƒgƒAƒbƒv (X68000Z—p)
+
+
+ ‚±‚ê‚Í RSSN ‚ð X68000Z Œü‚¯‚ÉƒZƒbƒgƒAƒbƒv‚·‚éÛ‚Ìˆê”Ê“I‚ÈŽè‡‚ð‚Ü‚Æ‚ß‚½‚à‚Ì‚Å‚·B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W •K—v‚Èƒ\ƒtƒgƒEƒFƒA
+
+
+
+[37m1. TMSIO.X[m
+
+ ‚‘¬RS232Cƒhƒ‰ƒCƒo‚Å‚ ‚é TMSIO.X ‚ª38400bps’ÊM‚É•K—v‚Å‚·BX68000 LIBRARY ‚È‚Ç‚©‚ç“üŽè‚µ‚Ä‘g‚Ýž‚ñ‚Å‚¨‚¢‚Ä‚­‚¾‚³‚¢B
+
+
+ ’ˆÓ: 
+  - ƒ³RSDRV.SYS‚ÍÅ‘å’ÊM‘¬“x‚ª19200bps‚È‚Ì‚Å‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
+  - TMSIO.X ‚ðÅ“K‰»‚µ‚½ BSIO.X ‚Íƒn[ƒhƒEƒFƒAƒtƒ[§ŒäŒÅ’è‚È‚Ì‚Å‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
+
+
+[37m2. DSHELL.X[m
+
+ ƒ†[ƒU[ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Æ‚È‚é DSHELL.X ‚ª•K—v‚Å‚·BÌ‚Ì“d”]‹äŠy•”‚É“Y•t‚³‚ê‚Ä‚¢‚½‚à‚Ì‚Å‘åä•v‚Å‚·‚ªAƒo[ƒWƒ‡ƒ“3.xx‚ðŽg‚Á‚Ä‚­‚¾‚³‚¢B‚ ‚Ü‚èŒÃ‚¢‚Æ‘Î‰ž‚Å‚«‚Ä‚¢‚È‚¢‰Â”\«‚ª‚ ‚è‚Ü‚·B
+
+
+[37m3. RSSN ”z•zƒpƒbƒP[ƒW[m
+
+ RSSNxxx.ZIP ‚ðˆÈ‰º‚©‚çƒ_ƒEƒ“ƒ[ƒh‚µ‚ÄAV‹KƒfƒBƒŒƒNƒgƒŠ‚É“WŠJ‚µ‚Ä‚¨‚¢‚Ä‚­‚¾‚³‚¢B
+ 
+  https://github.com/tantanGH/rssn/
+
+
+ RSSN ‚Ì‹N“®‚Í“WŠJ‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚ðƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚É‚µ‚ÄA
+
+  dshell index.doc
+
+ ‚Å‚·BrssndƒT[ƒo‚ª‹N“®‚µ‚Ä‚¢‚È‚¢ó‘Ô‚Å‚àARSSƒTƒCƒgˆê——‚âƒZƒbƒgƒAƒbƒvƒ}ƒjƒ…ƒAƒ‹‚ðŒ©‚é‚±‚Æ‚Í‰Â”\‚Å‚·B
+
+
+[37m4. RSSN ‘g‚Ýž‚ÝÏ‚Ý‹N“®—pXDF[m
+
+ X68000ZŒü‚¯‚É‚ÍA•K—v‚Èƒ\ƒtƒgƒEƒFƒA‚ð‚ ‚ç‚©‚¶‚ß‘g‚Ýž‚ñ‚Å\¬‚µ‚½‹N“®—pXDF‚à—pˆÓ‚µ‚Ä‚¢‚Ü‚·BˆÈ‰º‚ÌƒTƒCƒg‚©‚ç X68Z_RSSN_20xxxxxx.XDF ‚ðƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚­‚¾‚³‚¢B
+ 
+  https://github.com/tantanGH/rssn/
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W •K—v‚Èƒn[ƒhƒEƒFƒA
+
+
+
+[37m1. DSHELL.X ‚¨‚æ‚Ñ RSSN.X ‚ð“®‚©‚· X68000Z ‚Æƒ}ƒEƒX[m
+
+ DSHELL ‚ÍƒL[ƒ{[ƒh‚âƒWƒ‡ƒCƒXƒeƒBƒbƒN‚Å‚à‘€ì‚Å‚«‚Ü‚·‚ªAƒ}ƒEƒX‚Ì—˜—p‚ð‚¨‚·‚·‚ß‚µ‚Ü‚·B
+
+
+[37m2. rssnd (ƒT[ƒoƒvƒƒOƒ‰ƒ€) ‚ð“®‚©‚· Linux / macOS / Windows ‹@[m
+
+ ƒT[ƒoƒvƒƒOƒ‰ƒ€‚Å‚ ‚é rssnd ‚Í Python ‚Å‘‚©‚ê‚Ä‚¢‚é‚½‚ßAPython ‚ª“®‚¢‚ÄƒCƒ“ƒ^[ƒlƒbƒg‚ÉƒAƒNƒZƒX‰Â”\‚ÈŠÂ‹«‚Å‚ ‚ê‚Î‘åä•v‚Å‚·BŽèŒ³‚Ì Raspberry Pi 4B ‚Å‚à•’Ê‚É“®ì‚µ‚Ü‚µ‚½B
+
+
+[37m3. ã‹L2‚Â‚ðÚ‘±‚·‚é‚½‚ß‚ÌƒP[ƒuƒ‹[m
+
+ ƒP[ƒuƒ‹‚Í’Êí2–{•K—v‚É‚È‚è‚Ü‚·B
+
+
+ [37ma. X68000Zƒ³UARTƒP[ƒuƒ‹[m
+
+  X68000Z Early Access Kit ‚É‚Í•W€“Y•t‚³‚ê‚Ä‚¢‚Ü‚·B
+  X68000Z Production Model ‚É‚ÍƒRƒ“ƒvƒŠ[ƒgƒpƒbƒN‚Ì‚Ý•W€“Y•t‚³‚ê‚Ä‚¨‚èA‚»‚êˆÈŠO‚Í•Ê”„‚Å‚·B
+
+
+ [37mb. UART - USB•ÏŠ·ƒP[ƒuƒ‹[m
+
+  —á‚¦‚Î Raspberry Pi ‚Å‚ ‚ê‚ÎAX68000Z ‚Ì UART ‚Æ Raspberry Pi ‚Ì UART ‚ð’¼Œ‹‚·‚é‚±‚Æ‚à‚Å‚«‚é‚Ì‚Å‚·‚ªAˆÀ’è‚µ‚Ä 38400bps ‚Ì’ÊM‚ðs‚¤‚½‚ß‚É‚à UART - USB •ÏŠ·ƒP[ƒuƒ‹‚Ì—˜—p‚ð‹­‚­‚¨Š©‚ß‚µ‚Ü‚·B
+
+  ‚È‚¨AƒNƒƒXÚ‘±‚·‚é•K—v‚ª‚ ‚é‚Ì‚ÅA
+
+   X68000Z UART ‚Ì TX  ... UART - USB•ÏŠ·ƒP[ƒuƒ‹‚Ì RX
+   X68000Z UART ‚Ì RX  ... UART - USB•ÏŠ·ƒP[ƒuƒ‹‚Ì TX
+   X68000Z UART ‚Ì GND ... UART - USB•ÏŠ·ƒP[ƒuƒ‹‚Ì GND
+  
+  ‚Æ‚È‚é‚æ‚¤‚ÉŒ‹ü‚µ‚Ä‚­‚¾‚³‚¢B‚»‚êˆÈŠO‚Ì’[Žq (VCC/CTS/RTS)‚È‚Ç‚ÍÚ‘±•s—v‚Å‚·B
+
+
+ [37mc. USB Type-A to Type-C •ÏŠ·ƒP[ƒuƒ‹[m
+
+  ê‡‚É‚æ‚Á‚Ä‚Í‚±‚¿‚ç‚àŽg‚¤•K—v‚ª‚ ‚è‚Ü‚·B
+
+
+•K—v‚Èƒn[ƒhƒEƒFƒA‚ÍˆÈã‚É‚È‚è‚Ü‚·B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W rssd ƒT[ƒo‚ÌƒZƒbƒgƒAƒbƒv (Linux/Raspberry PiŒü‚¯)
+
+
+ git‚ª“ü‚Á‚Ä‚È‚¯‚ê‚ÎƒCƒ“ƒXƒg[ƒ‹
+
+    sudo apt install git
+
+ rssnd‚ðGithub‚©‚çƒCƒ“ƒXƒg[ƒ‹(pip‚ª‚È‚¯‚ê‚Îpip3‚ðŽg‚¤)
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+
+ ƒCƒ“ƒXƒg[ƒ‹Šm”F
+
+    rssnd --help
+
+ USB-UARTƒP[ƒuƒ‹‚ð‘}‚µ‚½ó‘Ô‚ÅAƒfƒoƒCƒX‚Ì‘¶Ý‚ðŠm”F
+
+    ls -alF /dev/ttyUSB?
+
+
+ rssnd‹N“®(ƒtƒHƒAƒOƒ‰ƒEƒ“ƒh)
+
+    rssnd -d /dev/ttyUSB? -s 38400 -v
+
+ ’âŽ~‚·‚é‚É‚ÍCTRL+C‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+ rssnd‹N“®(ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh)
+
+    nohup rssnd -d /dev/ttyUSB? -s 38400 -v > log-rssnd &
+
+ ’âŽ~‚·‚é‚É‚Íkill‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W rssd ƒT[ƒo‚ÌƒZƒbƒgƒAƒbƒv (macOSŒü‚¯)
+
+
+ Homebrew (https://brew.sh/) ‚ª“ü‚Á‚Ä‚¢‚È‚¯‚ê‚ÎƒTƒCƒg‚ÌŽwŽ¦‚É]‚¢ƒCƒ“ƒXƒg[ƒ‹
+
+ git‚ª“ü‚Á‚Ä‚È‚¯‚ê‚ÎƒCƒ“ƒXƒg[ƒ‹
+
+    brew install git
+
+ rssnd‚ðƒCƒ“ƒXƒg[ƒ‹(pip‚ª‚È‚¯‚ê‚Îpip3‚ðŽg‚¤)
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+
+ ƒCƒ“ƒXƒg[ƒ‹Šm”F
+
+    rssnd --help
+
+ USB-UARTƒP[ƒuƒ‹‚ð‘}‚µ‚½ó‘Ô‚ÅAƒfƒoƒCƒX‚Ì‘¶Ý‚ðŠm”F
+
+    ls -alF /dev/tty.usbserial-*
+
+
+ rssnd‹N“®(ƒtƒHƒAƒOƒ‰ƒEƒ“ƒh)
+
+    rssnd -d /dev/tty.usbserial-* -s 38400 -v
+
+ ’âŽ~‚·‚é‚É‚ÍCTRL+C‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+ rssnd‹N“®(ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh)
+
+    nohup rssnd -d /dev/tty.usbserial-* -s 38400 -v > log-rssnd &
+
+ ’âŽ~‚·‚é‚É‚Íkill‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W rssd ƒT[ƒo‚ÌƒZƒbƒgƒAƒbƒv (WindowsŒü‚¯)
+
+
+³’¼Windows‚Í‚ ‚Ü‚èŽg‚¤‹@‰ï‚à–³‚¢‚Ì‚Å‚æ‚­•ª‚©‚ç‚È‚¢‚Ì‚Å‚·‚ª(”š)AŽ©•ª‚Ì‘‚¢‚½Python“±“üƒ}ƒjƒ…ƒAƒ‹‚ª‚ ‚è‚Ü‚·B
+
+  https://github.com/tantanGH
+
+‚±‚¿‚ç‚Ì–ÚŽŸ‚Ì‰º‚Ì•û‚É Windowsƒ†[ƒUŒü‚¯Python“±“üƒKƒCƒh ‚ª‚ ‚è‚Ü‚·‚Ì‚Å‚»‚ê‚É]‚Á‚Ä git ‚¨‚æ‚Ñ Python ‚ð“±“ü‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+rssnd‚ðƒCƒ“ƒXƒg[ƒ‹
+
+    pip install git+https://github.com/tantanGH/rssn.git
+
+USB-UARTƒP[ƒuƒ‹‚ð‘}‚µ‚½ó‘Ô‚ÅAƒRƒ“ƒgƒ[ƒ‹ƒpƒlƒ‹‚È‚Ç‚©‚ç³‚µ‚­COM?‚Æ‚µ‚Ä”FŽ¯‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ðŠm”F‚µ‚Ü‚·B
+(‚·‚Ý‚Ü‚¹‚ñAÚ×‚í‚©‚è‚Ü‚¹‚ñ)
+
+
+“®ìŠm”F
+
+    rssnd --help
+
+rssnd‹N“®(ƒtƒHƒAƒOƒ‰ƒEƒ“ƒh)
+
+    rssnd -d COM? -s 38400 -v
+
+COM? ‚Í USB-UART ‚ÌƒfƒoƒCƒX–¼‚ðŽw’è‚µ‚Ä‚­‚¾‚³‚¢B
+’âŽ~‚·‚é‚É‚ÍCTRL+C‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+
+[EOF]
+

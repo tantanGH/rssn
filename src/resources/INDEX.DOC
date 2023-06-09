@@ -31,10 +31,10 @@
  –{ƒVƒXƒeƒ€ [36mRSSN(RSS News)[m ‚ÍX680x0‚Å‚±‚ÌRSS‚ð“Ç‚Þ‚½‚ß‚ÌƒVƒXƒeƒ€‚Å‚·B
 
 
- [36mRSSN[m ‚Í’P“Æ‚ÌƒvƒƒOƒ‰ƒ€‚Å‚Í‚ ‚è‚Ü‚¹‚ñBƒtƒƒ“ƒgƒGƒ“ƒh‚Ìƒ†[ƒU[ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Æ‚µ‚ÄA‚©‚Â‚Ä–žŠJ»ìŠ‚ÌƒfƒBƒXƒNƒ}ƒKƒWƒ“u“d”]‹äŠy•”v‚ÅŽg‚í‚ê‚Ä‚¢‚½ DSHELL ‚ðÌ—p‚³‚¹‚Ä‚à‚ç‚Á‚Ä‚¢‚Ü‚·B‚±‚Ì DSHELL ‚ðARSS‹LŽ–‚ðŽÀÛ‚ÉƒCƒ“ƒ^[ƒlƒbƒg‚©‚çŽæ“¾‚·‚é‚½‚ß‚ÌƒoƒbƒNƒGƒ“ƒh‚ÌƒvƒƒOƒ‰ƒ€ŒQ‚Æ‹¦’²‚µ‚Ä“®ì‚³‚¹‚é\¬‚É‚È‚Á‚Ä‚¢‚Ü‚·B
+ [36mRSSN[m ‚Í’P“Æ‚ÌƒvƒƒOƒ‰ƒ€‚Å‚Í‚ ‚è‚Ü‚¹‚ñBƒtƒƒ“ƒgƒGƒ“ƒh‚Ìƒ†[ƒU[ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Æ‚µ‚ÄA‚©‚Â‚Ä–žŠJ»ìŠ‚ÌƒfƒBƒXƒNƒ}ƒKƒWƒ“u“d”]‹äŠy•”v‚ÅŽg‚í‚ê‚Ä‚¢‚½ DSHELL ‚ðÌ—p‚³‚¹‚Ä‚à‚ç‚Á‚Ä‚¢‚Ü‚·B‚±‚Ì DSHELL ‚ðARSS‹LŽ–‚ðŽÀÛ‚ÉƒCƒ“ƒ^[ƒlƒbƒg‚©‚çŽæ“¾‚·‚éƒoƒbƒNƒGƒ“ƒh‚ÌƒvƒƒOƒ‰ƒ€ŒQ‚Æ‹¦’²‚µ‚Ä“®ì‚³‚¹‚é\¬‚É‚È‚Á‚Ä‚¢‚Ü‚·B
 
 
-   [37mX680x0 / Human68k[m                                     [37mRaspberry Pi etc.[m
+   [37mX680x0 / Human68k[m                                  [37mRaspberry Pi / Linux / macOS / Win[m
 
   [   RSSN.X   ] © RS232C ƒNƒƒX (38400bps) USB •ÏŠ· ¨ [ rssnd (Python) ] ©¨ Internet
 
@@ -47,7 +47,7 @@
    Õ°»Þ°²ÝÀ°Ìª²½
 
 
- ‚±‚ê‚É‚æ‚èAu“dŒ¹ON‚Å‚·‚®‹N“®Aƒ}ƒEƒXˆê‚Â‚Å‚ç‚­‚ç‚­‘€ìv‚ÌƒRƒ“ƒZƒvƒg‚ð“¥P‚µ‚Â‚ÂAƒIƒ“ƒ‰ƒCƒ“‚Åí‚ÉÅV‚Ìî•ñ‚ÉƒAƒNƒZƒX‚ª‰Â”\‚Æ‚È‚Á‚Ä‚¢‚Ü‚·B
+ ‚±‚ê‚É‚æ‚èAu“dŒ¹ON‚Å‚·‚®‹N“®Aƒ}ƒEƒXˆê‚Â‚Å‚ç‚­‚ç‚­‘€ìv‚ÌƒRƒ“ƒZƒvƒg‚ð“¥P‚µ‚Â‚ÂAí‚ÉÅV‚Ìî•ñ‚ÉƒIƒ“ƒ‰ƒCƒ“‚ÅƒAƒNƒZƒX‚ª‰Â”\‚Æ‚È‚Á‚Ä‚¢‚Ü‚·B
 
 
  ‚È‚¨AƒCƒ“ƒ^[ƒlƒbƒg‚©‚çƒf[ƒ^‚ðŽæ“¾‚Í‚µ‚Ü‚·‚ªANeptune-X‚È‚Ç‚ðŽg‚Á‚½ƒC[ƒTƒlƒbƒgŠÂ‹«‚âPPPŠÂ‹«‚ðX680x0‘¤‚É®‚¦‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñBã‹L‚Ì’Ê‚èRS232Cƒ|[ƒg‚ªŽg‚¦‚é‚±‚Æ‚ªðŒ‚Æ‚È‚è‚Ü‚·B

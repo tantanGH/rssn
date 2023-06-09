@@ -20,7 +20,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'rssdn=rssnd.rssnd:main'
+            'rssnd=rssnd.rssnd:main'
         ]
     },
     packages=setuptools.find_packages(),

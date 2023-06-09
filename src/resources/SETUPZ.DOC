@@ -5,20 +5,35 @@
  ‚±‚ê‚Í RSSN ‚ð X68000Z Œü‚¯‚ÉƒZƒbƒgƒAƒbƒv‚·‚éÛ‚Ìˆê”Ê“I‚ÈŽè‡‚ð‚Ü‚Æ‚ß‚½‚à‚Ì‚Å‚·B
 
 
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W ‹N“®—pXDF
+
+
+
+ X68000ZŒü‚¯‚É‚ÍA•K—v‚Èƒ\ƒtƒgƒEƒFƒA‚ð‚ ‚ç‚©‚¶‚ß‘g‚Ýž‚ñ‚Å\¬‚µ‚½‹N“®—pXDF‚ð—pˆÓ‚µ‚Ä‚ ‚è‚Ü‚·BˆÈ‰º‚ÌƒTƒCƒg‚©‚ç X68Z_RSSN_20xxxxxx.XDF ‚ðƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚­‚¾‚³‚¢B
+ 
+  https://github.com/tantanGH/rssn/
+
+
 „ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 
 %V%W •K—v‚Èƒ\ƒtƒgƒEƒFƒA
 
 
 
-[37m1. TMSIO.X[m
+ ŒÂ•Ê‚ÉŠù‘¶‚ÌŠÂ‹«ã‚ÉƒZƒbƒgƒAƒbƒv‚·‚éê‡‚Í‚±‚¿‚ç‚ðŽQl‚É‚µ‚Ä‚­‚¾‚³‚¢B
 
- ‚‘¬RS232Cƒhƒ‰ƒCƒo‚Å‚ ‚é TMSIO.X ‚ª38400bps’ÊM‚É•K—v‚Å‚·BX68000 LIBRARY ‚È‚Ç‚©‚ç“üŽè‚µ‚Ä‘g‚Ýž‚ñ‚Å‚¨‚¢‚Ä‚­‚¾‚³‚¢B
+
+[37m1. RSDRV.SYS[m
+
+ ‚‘¬RS232Cƒhƒ‰ƒCƒo‚Å‚ ‚é Human68k 3.02•t‘®‚ÌRSDRV.SYS‚ª38400bps’ÊM‚É•K—v‚Å‚·BCONFIG.SYS‚É‘g‚Ýž‚ñ‚Å‚¨‚¢‚Ä‚­‚¾‚³‚¢B
 
 
  ’ˆÓ: 
-  - ƒ³RSDRV.SYS‚ÍÅ‘å’ÊM‘¬“x‚ª19200bps‚È‚Ì‚Å‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
-  - TMSIO.X ‚ðÅ“K‰»‚µ‚½ BSIO.X ‚Íƒn[ƒhƒEƒFƒAƒtƒ[§ŒäŒÅ’è‚È‚Ì‚Å‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
+  - X68000Z‚É‚¨‚¢‚Ä‚ÍTMSIO.X‚ÍˆÀ’è‚µ‚ÄŽg‚¦‚È‚¢‚Ì‚ÅAƒ³RSDRV.SYS‚ðŽg‚Á‚Ä‚­‚¾‚³‚¢B
+  - RSDRV.SYS‚Í”ñŒöŽ®‚Å38400bps‚Ì’ÊM‚É‚à‘Î‰ž‚µ‚Ä‚¢‚Ü‚·B
 
 
 [37m2. DSHELL.X[m
@@ -40,20 +55,13 @@
  ‚Å‚·BrssndƒT[ƒo‚ª‹N“®‚µ‚Ä‚¢‚È‚¢ó‘Ô‚Å‚àARSSƒTƒCƒgˆê——‚âƒZƒbƒgƒAƒbƒvƒ}ƒjƒ…ƒAƒ‹‚ðŒ©‚é‚±‚Æ‚Í‰Â”\‚Å‚·B
 
 
-[37m4. RSSN ‘g‚Ýž‚ÝÏ‚Ý‹N“®—pXDF[m
-
- X68000ZŒü‚¯‚É‚ÍA•K—v‚Èƒ\ƒtƒgƒEƒFƒA‚ð‚ ‚ç‚©‚¶‚ß‘g‚Ýž‚ñ‚Å\¬‚µ‚½‹N“®—pXDF‚à—pˆÓ‚µ‚Ä‚¢‚Ü‚·BˆÈ‰º‚ÌƒTƒCƒg‚©‚ç X68Z_RSSN_20xxxxxx.XDF ‚ðƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚­‚¾‚³‚¢B
- 
-  https://github.com/tantanGH/rssn/
-
-
 „ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 
 %V%W •K—v‚Èƒn[ƒhƒEƒFƒA
 
 
 
-[37m1. DSHELL.X ‚¨‚æ‚Ñ RSSN.X ‚ð“®‚©‚· X68000Z ‚Æƒ}ƒEƒX[m
+[37m1. X68000Z ‚Æƒ}ƒEƒX[m
 
  DSHELL ‚ÍƒL[ƒ{[ƒh‚âƒWƒ‡ƒCƒXƒeƒBƒbƒN‚Å‚à‘€ì‚Å‚«‚Ü‚·‚ªAƒ}ƒEƒX‚Ì—˜—p‚ð‚¨‚·‚·‚ß‚µ‚Ü‚·B
 
@@ -207,4 +215,3 @@ COM? ‚Í USB-UART ‚ÌƒfƒoƒCƒX–¼‚ðŽw’è‚µ‚Ä‚­‚¾‚³‚¢B
 
 
 [EOF]
-

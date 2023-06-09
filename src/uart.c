@@ -79,18 +79,11 @@ int32_t uart_open(UART* uart, int32_t baud_rate, int32_t timeout) {
       speed = 8;
       break;
     case 38400:
-      if (uart->tmsio == 0) {
-        printf("error: need TMSIO.X for 38400bps use.\n");
+      if (uart->tmsio == 0 && uart->rsdrv == 0) {
+        printf("error: need TMSIO.X or RSDRV.SYS for 38400bps use.\n");
         goto exit;
       }
       speed = 9;
-      break;
-    case 57600:
-      if (uart->tmsio == 0) {
-        printf("error: need TMSIO.X for 57600bps use.\n");
-        goto exit;
-      }
-      speed = 0x0d;
       break;
     default:
       printf("error: unsupported baud rate.\n");

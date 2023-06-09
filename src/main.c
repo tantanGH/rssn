@@ -79,10 +79,6 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
     if (argv[i][0] == '-' && strlen(argv[i]) >= 2) {
       if (argv[i][1] == 's' && i+1 < argc) {
         baud_rate = atoi(argv[i+1]);
-        if (baud_rate != 9600 && baud_rate != 19200 && baud_rate != 38400) {
-          printf("error: unknown baud rate.\n");
-          goto exit;
-        }
         i++;
       } else if (argv[i][1] == 'h') {
         show_help_message();
@@ -98,6 +94,11 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
         strcpy(output_file_name, argv[i]);
       }
     }
+  }
+
+  if (baud_rate != 9600 && baud_rate != 19200 && baud_rate != 38400) {
+    printf("error: unsupported baud rate. (%d)\n", baud_rate);
+    goto exit;
   }
 
   if (rss_url == NULL) {

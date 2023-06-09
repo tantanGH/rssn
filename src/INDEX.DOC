@@ -1,0 +1,216 @@
+
+
+%V%W                 RSSN - RSS News for X680x0
+
+
+           An On-Line RSS News Reader Service integrated with DSHELL and X680x0
+
+    %CUT:+-RSSN.CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+    %CUT
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W ‚Í‚¶‚ß‚É
+
+
+ [37mRSS(Rich Site Summary)[m ‚Æ‚ÍAå‚ÉƒCƒ“ƒ^[ƒlƒbƒgã‚Ìƒjƒ…[ƒXŒnƒEƒFƒuƒTƒCƒg‚ª—v–ñ‚â‹L–Œ©o‚µ‚ğ”zM‚·‚é‚½‚ß‚Ìd‘g‚İ‚Å‚·B’Êí‚ÌƒRƒ“ƒeƒ“ƒc‚É”ä‚×‚Ä”ñí‚ÉŒy—Ê‚È‚Ì‚ª“Á’¥‚Å‚·B‚Ü‚½AŒÂl—˜—p‚©‚Âí¯“I‚È—˜—p‚Ì”ÍˆÍ‚Å‚ ‚ê‚Î“Á‚É“o˜^‚È‚Ç‚¹‚¸‚É—˜—p‚Å‚«‚é‚±‚Æ‚ª‚Ù‚Æ‚ñ‚Ç‚Å‚·B
+
+
+ –{ƒVƒXƒeƒ€ [36mRSSN(RSS News)[m ‚ÍX680x0‚Å‚±‚ÌRSS‚ğ“Ç‚Ş‚½‚ß‚ÌƒVƒXƒeƒ€‚Å‚·B
+
+
+ [36mRSSN[m ‚Í’P“Æ‚ÌƒvƒƒOƒ‰ƒ€‚Å‚Í‚ ‚è‚Ü‚¹‚ñBƒtƒƒ“ƒgƒGƒ“ƒh‚Ìƒ†[ƒU[ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Æ‚µ‚ÄA‚©‚Â‚Ä–ŠJ»ìŠ‚ÌƒfƒBƒXƒNƒ}ƒKƒWƒ“u“d”]‹äŠy•”v‚Åg‚í‚ê‚Ä‚¢‚½ DSHELL ‚ğÌ—p‚³‚¹‚Ä‚à‚ç‚Á‚Ä‚¢‚Ü‚·B‚±‚Ì DSHELL ‚ğARSS‹L–‚ğÀÛ‚ÉƒCƒ“ƒ^[ƒlƒbƒg‚©‚çæ“¾‚·‚é‚½‚ß‚ÌƒoƒbƒNƒGƒ“ƒh‚ÌƒvƒƒOƒ‰ƒ€ŒQ‚Æ‹¦’²‚µ‚Ä“®ì‚³‚¹‚é\¬‚É‚È‚Á‚Ä‚¢‚Ü‚·B
+
+
+   [37mX680x0 / Human68k[m                                     [37mRaspberry Pi etc.[m
+
+  [   RSSN.X   ] © RS232C ƒNƒƒX (38400bps) USB •ÏŠ· ¨ [ rssnd (Python) ] ©¨ Internet
+
+      ª«
+
+  [  DSHELL.X  ]
+
+      ª«
+
+   Õ°»Ş°²İÀ°Ìª²½
+
+
+ ‚±‚ê‚É‚æ‚èAu“dŒ¹ON‚Å‚·‚®‹N“®Aƒ}ƒEƒXˆê‚Â‚Å‚ç‚­‚ç‚­‘€ìv‚ÌƒRƒ“ƒZƒvƒg‚ğ“¥P‚µ‚Â‚ÂAƒIƒ“ƒ‰ƒCƒ“‚Åí‚ÉÅV‚Ìî•ñ‚ÉƒAƒNƒZƒX‚ª‰Â”\‚Æ‚È‚Á‚Ä‚¢‚Ü‚·B
+
+
+ ‚È‚¨AƒCƒ“ƒ^[ƒlƒbƒg‚©‚çƒf[ƒ^‚ğæ“¾‚Í‚µ‚Ü‚·‚ªANeptune-X‚È‚Ç‚ğg‚Á‚½ƒC[ƒTƒlƒbƒgŠÂ‹«‚âPPPŠÂ‹«‚ğX680x0‘¤‚É®‚¦‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñBã‹L‚Ì’Ê‚èRS232Cƒ|[ƒg‚ªg‚¦‚é‚±‚Æ‚ªğŒ‚Æ‚È‚è‚Ü‚·B
+
+
+ ‹ï‘Ì“I‚ÈƒZƒbƒgƒAƒbƒv•û–@‚ÍˆÈ‰º‚Ìè‡‚ğQl‚É‚µ‚Ä‚­‚¾‚³‚¢B
+
+ RSSNƒZƒbƒgƒAƒbƒv•û–@(À‹@Œü‚¯) TYPE=DOC:SETUP.DOC
+
+
+ ‚Ü‚½AX68000Z‚Å‚àUARTƒ|[ƒg‚ğg‚¤‚±‚Æ‚Å—˜—p‰Â”\‚Å‚·B
+
+ RSSNƒZƒbƒgƒAƒbƒv•û–@(X68000ZŒü‚¯)  TYPE=DOC:SETUPZ.DOC
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W RSSƒTƒCƒg‚Ì’Ç‰Á•û–@
+
+
+ ‚±‚ÌINDEX.DOC‚ğƒoƒbƒNƒAƒbƒv‚ğ‚Æ‚Á‚½ã‚ÅA’¼ÚƒeƒLƒXƒgƒGƒfƒBƒ^‚Å•ÒW‚µ‚Ä‚­‚¾‚³‚¢BŠî–{“I‚É‚Í’è‹`Ï‚ÌƒTƒ“ƒvƒ‹‚Æ“¯‚¶‘®‚Å’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B‚½‚¾‚µA1s‚ª96•¶š‚ğ‰z‚¦‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñ‚Ì‚ÅA‹É’[‚ÉURL‚ª’·‚¢ƒTƒCƒg‚Í“o˜^‚Å‚«‚Ü‚¹‚ñB
+
+
+ ‘®Fæ“ª‚Ì‚É‘±‚¢‚ÄˆÈ‰º‚ÌŒ`®‚Å‹Lq‚·‚éB
+
+    TYPE=EDE:RSSN https://...;_R.D
+
+
+ ‚È‚¨AƒTƒ“ƒvƒ‹‚Æ‚µ‚Ä“o˜^‚³‚ê‚Ä‚¢‚éƒTƒCƒg‚ÍA
+
+EŒö®‚É©ƒTƒCƒg‚ÅRSS”zM‚ªs‚í‚ê‚Ä‚¢‚é
+
+Ehttps:// ‚ÌSSLÚ‘±‚ªÌ—p‚³‚ê‚Ä‚¢‚é
+
+Edescription ‚Æ‚µ‚Ä‹L–ƒ^ƒCƒgƒ‹‚¾‚¯‚Å‚È‚­—v–ñ‚Ü‚Å”zM‚³‚ê‚Ä‚¢‚é
+
+‚ÌğŒ‚ğ–‚½‚µ‚Ä‚¢‚éƒTƒCƒg‚ÉŒÀ‚Á‚Ä‚¢‚Ü‚·B”ñŒö®‚ÈRSSƒTƒCƒg‚âAhttp:// ‚ÌŒÃ‚¢ƒTƒCƒg‚Í—˜—p‚µ‚È‚¢‚±‚Æ‚ğ‚¨Š©‚ß‚µ‚Ü‚·B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W Impress Watch
+
+
+[37mImpress Watch[m
+TYPE=EDE:RSSN https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf;_R.D
+
+[37mImpress INTERNET Watch[m
+TYPE=EDE:RSSN https://internet.watch.impress.co.jp/data/rss/1.0/iw/feed.rdf;_R.D
+
+[37mImpress PC Watch[m
+TYPE=EDE:RSSN https://pc.watch.impress.co.jp/data/rss/1.0/pcw/feed.rdf;_R.D
+
+[37mImpress AKIBA PC Hotline![m
+TYPE=EDE:RSSN https://akiba-pc.watch.impress.co.jp/data/rss/1.0/ah/feed.rdf;_R.D
+
+[37mImpress AV Watch[m
+TYPE=EDE:RSSN https://av.watch.impress.co.jp/data/rss/1.0/avw/feed.rdf;_R.D
+
+[37mImpress ƒNƒ‰ƒEƒh Watch[m
+TYPE=EDE:RSSN https://cloud.watch.impress.co.jp/data/rss/1.0/clw/feed.rdf;_R.D
+
+
+ª‚ğƒ}ƒEƒX‚ÅƒNƒŠƒbƒN‚·‚é‚Æ‹L–‰æ–Ê‚ÉˆÚ‚è‚Ü‚·BRS232C‚ÌÚ‘±‚Ærssnd‚Ì‹N“®‚ğ‚¨–Y‚ê‚È‚­B
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W NHK News
+
+
+[37mNHKƒjƒ…[ƒX å—vƒjƒ…[ƒX[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat0.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX Ğ‰ï[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat1.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX ‰ÈŠwEˆã—Ã[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat3.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX ­¡[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat4.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX ŒoÏ[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat5.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX ‘Û[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat6.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX ƒXƒ|[ƒc[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat7.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX •¶‰»EƒGƒ“ƒ^ƒ[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat2.xml;_R.D
+
+[37mNHKƒjƒ…[ƒX LIVEƒjƒ…[ƒX[m
+TYPE=EDE:RSSN https://www.nhk.or.jp/rss/news/cat-live.xml;_R.D
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W “úŒoƒrƒWƒlƒX
+
+
+[37m“úŒoƒrƒWƒlƒX“dq”Å[m
+TYPE=EDE:RSSN https://business.nikkei.com/rss/sns/nb.rdf;_R.D
+
+[37m“úŒoƒrƒWƒlƒXX[m
+TYPE=EDE:RSSN https://business.nikkei.com/rss/sns/nb-x.rdf;_R.D
+
+[37m“úŒoƒrƒWƒlƒX+[m
+TYPE=EDE:RSSN https://business.nikkei.com/rss/sns/nb-plus.rdf;_R.D
+
+[37m“úŒoƒrƒWƒlƒXLIVE[m
+TYPE=EDE:RSSN https://business.nikkei.com/rss/sns/nb-live.rdf;_R.D
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W IT Media
+
+
+[37mIT Media PC USER V’…‹L–[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/pcuser.xml;_R.D
+
+[37mIT Media PC USER ƒAƒLƒoŠÖ˜A‹L–[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/kw_akiba.xml;_R.D
+
+[37mIT Media PC USER AppleŠÖ˜A‹L–[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/kw_apple.xml;_R.D
+
+[37mIT Media NEWS V’…‹L–[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml;_R.D
+
+[37mIT Media NEWS ‘“à‹L–[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_domestic.xml;_R.D
+
+[37mIT Media NEWS ŠCŠO‹L–[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_foreign.xml;_R.D
+
+[37mIT Media NEWS »•i“®Œü[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_products.xml;_R.D
+
+[37mIT Media NEWS ƒZƒLƒ…ƒŠƒeƒB[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_security.xml;_R.D
+
+[37mIT Media NEWS ‰ÈŠwEƒeƒNƒmƒƒW[[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_technology.xml;_R.D
+
+[37mIT Media NEWS ƒlƒbƒgƒgƒsƒbƒN[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_nettopics.xml;_R.D
+
+[37mIT Media NEWS Šé‹ÆE‹ÆŠE“®Œü[m
+TYPE=EDE:RSSN https://rss.itmedia.co.jp/rss/2.0/news_industry.xml;_R.D
+
+
+„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+
+%V%W ’ˆÓ–€
+
+
+E–{ƒvƒƒOƒ‰ƒ€ŒQ‚ğ—˜—p‚µ‚½‚±‚Æ‚É‚æ‚è‰½‚ç‚©‚Ì‘¹ŠQ‚ª”­¶‚µ‚Ä‚àˆêØ‚ÌÓ”C‚Í•‰‚¦‚Ü‚¹‚ñ‚Ì‚ÅA©ŒÈÓ”C‚É‚Ä—˜—p‚µ‚Ä‚­‚¾‚³‚¢B
+
+E‰½‚©‚ ‚ê‚Î tantan (@snakGH at Twitter) ‚Ü‚Å‚¨Šè‚¢‚µ‚Ü‚·B‚½‚¾‚µA•s‹ï‡“™‚ÌC³‚Ì‹`–±‚ğ•‰‚¤‚à‚Ì‚Å‚Í‚ ‚è‚Ü‚¹‚ñB
+
+[EOF]

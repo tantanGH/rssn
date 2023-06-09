@@ -58,11 +58,10 @@ gitをインストール
 
     sudo apt install git
 
-rssndをインストール
+rssndをインストール(pipがなければpip3を使う)
 
     pip install git+https://github.com/tantanGH/rssn.git
 
-pipがなければpip3を使う。
 
 動作確認
 
@@ -76,6 +75,7 @@ rssnd起動
 
     rssnd -d /dev/ttyUSB0 -s 38400 -v
 
+停止するにはCTRL+Cを押すかkillしてください。
 
 ## macOS
 
@@ -85,11 +85,9 @@ gitをインストール
 
     brew install git
 
-rssndをインストール
+rssndをインストール(pipがなければpip3を使う)
 
     pip install git+https://github.com/tantanGH/rssn.git
-
-pipがなければpip3を使う。
 
 動作確認
 
@@ -102,6 +100,8 @@ USB-Serialケーブルを挿した状態で、デバイスの存在を確認
 rssn起動
 
     rssn -d /dev/tty.usbserial-xxxx -s 38400 -v
+
+停止するにはCTRL+Cを押すかkillしてください。
 
 ## Windows
 
@@ -120,6 +120,8 @@ USB - Serial ケーブルを挿し、コントロールパネルで COM1 とし�
 起動
 
     rssnd -d COM1 -s 38400 -v
+
+停止するにはCTRL+Cを押してください。
 
 ---
 

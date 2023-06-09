@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="rssnd",
-    version="0.1.0",
+    version="0.5.0",
     author="tantanGH",
     author_email="tantanGH@github",
     license='MIT',
@@ -20,7 +20,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            's44rasd=s44rasd.s44rasd:main'
+            'rssdn=rssnd.rssnd:main'
         ]
     },
     packages=setuptools.find_packages(),

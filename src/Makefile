@@ -23,10 +23,10 @@ HLK = $(RUN68) ${XDEV68K_DIR}/x68k_bin/hlk301.x
 TARGET_FILE = RSSN.X
 
 # Document file
-DOCUMENT_FILE = rssn.def rssn.tec
+DOCUMENT_FILE = README.TXT INDEX.DOC SETUP.DOC SETUPZ.DOC RSSN.CUT
 
 # Distribution package 
-PACKAGE_FILE = ../RSSN010.ZIP
+PACKAGE_FILE = ../RSSN050.ZIP
 
 # ヘッダ検索パス
 INCLUDE_FLAGS = -I${XDEV68K_DIR}/include/xc -I${XDEV68K_DIR}/include/xdev68k
@@ -37,13 +37,13 @@ CFLAGS = $(COMMON_FLAGS) -Wno-builtin-declaration-mismatch -fcall-used-d2 -fcall
     -fexec-charset=cp932 -fverbose-asm -fno-defer-pop
 
 # *.c ソースファイル
-C_SRCS = himem.c uart.c rss.c panel.c main.c
+C_SRCS = himem.c uart.c rss.c main.c
 
 # *.s ソースファイル
 ASM_SRCS =
 
 # *.h source files
-HEADER_SRCS = himem.h uart.h rss.h panel.h rssn.h
+HEADER_SRCS = himem.h uart.h rss.h rssn.h
 
 # リンク対象のライブラリファイル
 LIBS =\
@@ -64,7 +64,7 @@ OBJS =	$(addprefix $(INTERMEDIATE_DIR)/,$(patsubst %.c,%.o,$(C_SRCS))) \
 HLK_LINK_LIST = $(INTERMEDIATE_DIR)/_lk_list.tmp
 
 # デフォルトのターゲット
-all : ${INTERMEDIATE_DIR}/$(TARGET_FILE)
+all : ${INTERMEDIATE_DIR}/$(TARGET_FILE) ${INTERMEDIATE_DIR}/$(TARGET_FILE2) 
 
 # 中間生成物の削除
 clean : 
@@ -89,7 +89,7 @@ ${INTERMEDIATE_DIR}/$(TARGET_FILE) : $(OBJS)
 	rm -f tmp*.\$$\$$\$$
 
 # *.c ソースのコンパイル
-$(INTERMEDIATE_DIR)/%.o : %.c Makefile $(HEADER_SRCS)
+$(INTERMEDIATE_DIR)/%.o : %.c Makefile $(HEADER_SRCS) $(HEADER_SRCS2)
 	mkdir -p $(INTERMEDIATE_DIR)
 	$(CC) -S $(CFLAGS) -o $(INTERMEDIATE_DIR)/$*.m68k-gas.s $<
 	$(GAS2HAS) -i $(INTERMEDIATE_DIR)/$*.m68k-gas.s -o $(INTERMEDIATE_DIR)/$*.s

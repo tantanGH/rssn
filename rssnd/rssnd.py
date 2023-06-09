@@ -16,13 +16,17 @@ RESPONSE_NOT_FOUND              = 404
 RESPONSE_INTERNAL_SERVER_ERROR  = 500
 RESPONSE_SERVICE_UNAVAILABLE    = 503
 
+# horizontal bar
+HORIZONTAL_BAR = bytes([0x84, 0xaa]).decode('cp932') * 47
+
 # abort flag
-abort_service = False
+g_abort_service = False
 
 # sigint handler
 def sigint_handler(signum, frame):
   print("CTRL-C is pressed. Stopping the service.")
-  abort_service = True
+  global g_abort_service
+  g_abort_service = True
 
 # respond
 def respond(port, code, body=""):
@@ -58,13 +62,17 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
 
     print(f"Started. (serial_device={serial_device}, serial_baudrate={serial_baudrate})")
 
-    abort_service = False
+    global g_abort_service
+    g_abort_service = False
 
-    while abort_service is False:
+    while g_abort_service is False:
 
       # find request header prefix '>', '|'
       prefix = 0
-      while abort_service is False:
+      while g_abort_service is False:
+        if port.in_waiting < 1:
+          time.sleep(0.05)
+          continue
         c = port.read()
         if prefix == 0 and c[:1] == b'>':
           prefix = 1
@@ -97,21 +105,73 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
         respond(port, RESPONSE_OK, API_VERSION)
 
       # request handler - items
-      elif request_body_str.startswith("/items?link="):
+#      elif request_body_str.startswith("/items?link="):
 
         # get RSS feed from Internet
-        feed = feedparser.parse(request_body_str[12:])
+#        feed = feedparser.parse(request_body_str[12:])
+
+#        entries = feed.entries[:max_entries]
+
+#        res = str(len(entries)) + "\n"
+#        for e in entries:
+#          tm = time.mktime(e.updated_parsed) + 9 * 3600
+#          dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
+#          t = e.title if hasattr(e, 'title') else ""
+#          s = e.summary if hasattr(e, 'summary') else ""
+#          res += t + "\t" + dt + "\t" + s + "\n"
+
+#        if verbose:
+#          print(f"returned {len(entries)} items.")
+
+#        respond(port, RESPONSE_OK, res)
+
+      # request handler - dshell
+      elif request_body_str.startswith("/dshell?link="):
+
+        # get RSS feed from Internet
+        feed = feedparser.parse(request_body_str[13:])
+
+        res = ""
 
         entries = feed.entries[:max_entries]
-
-        res = str(len(entries)) + "\n"
         for e in entries:
-          t = time.mktime(e.updated_parsed) + 9 * 3600
-          dt = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S %a')
+
+          t = e.title if hasattr(e, 'title') else ""
           s = e.summary if hasattr(e, 'summary') else ""
-          #a = e.author if hasattr(e, 'author') else ""
-          #res += e.title + "\t" + dt + "\t" + a + "\t" + s + "\n"
-          res += e.title + "\t" + dt + "\t" + s + "\n"
+          tm = time.mktime(e.updated_parsed) + 9 * 3600
+          dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
+
+          title_sjis_bytes = t.encode('cp932')
+
+          ofs_bytes = 0
+          num_chars = 0
+
+          while len(title_sjis_bytes) > 62:
+
+            c = title_sjis_bytes[ ofs_bytes ]
+            if (c >= 0x81 and c <= 0x9f) or (c >= 0xe0 and c <= 0xef):
+              ofs_bytes += 1
+
+            ofs_bytes += 1
+            num_chars += 1
+            if ofs_bytes >= 61:
+              res += f"\n%V%W{t[:num_chars]}\u0018\n"
+              t = t[num_chars:]
+              title_sjis_bytes = title_sjis_bytes[ofs_bytes:]
+              ofs_bytes = 0
+              num_chars = 0
+
+          res += f"""
+%V%W{t}\u0018
+
+
+日付：{dt}
+
+{s}
+
+{HORIZONTAL_BAR}
+"""
+        res += "\n[EOF]\n"
 
         if verbose:
           print(f"returned {len(entries)} items.")

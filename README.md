@@ -10,11 +10,10 @@ RSS News Reader System for X680x0/Human68k
 
 RSSN は、X680x0/Human68k 上で動作する、RSS News Reader Systemです。
 
-- オンライン常時接続
+- 高速38400bps常時接続
 - X680x0側にイーサネット環境不要
-- ユーザーインターフェイスとして電脳倶楽部のDSHELLを採用
+- ユーザーインターフェイスとして電脳倶楽部のDSHELLを採用(すいません)
 - あらかじめ実績のあるいくつかのRSSサイトを定義済み
-- 常時接続38400bps高速通信
 - X68000Z対応
 
 <img src='images/rssn1.png' width='800px'/>

@@ -121,7 +121,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
           tm = time.mktime(e.updated_parsed) + 9 * 3600
           dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
 
-          title_sjis_bytes = t.encode('cp932')
+          title_sjis_bytes = t.encode('cp932', errors="backslashreplace")
 
           ofs_bytes = 0
           num_chars = 0

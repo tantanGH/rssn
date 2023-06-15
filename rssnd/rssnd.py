@@ -4,6 +4,7 @@ import time
 import datetime
 import signal
 import serial
+import requests
 import feedparser
 
 # API version
@@ -108,7 +109,8 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
       elif request_body_str.startswith("/dshell?link="):
 
         # get RSS feed from Internet
-        feed = feedparser.parse(request_body_str[13:])
+        feed_content = requests.get(request_body_str[13:])
+        feed = feedparser.parse(feed_content.text)
 
         res = ""
 

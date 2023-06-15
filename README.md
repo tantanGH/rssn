@@ -62,7 +62,7 @@ RSSNxxx.ZIP をダウンロードし、新規ディレクトリに展開する�
 
 X68000Z の場合はこちらの起動用XDFを使うと既に構成済みですので手軽です。
 
-[X68Z_RSSN_20230609.XDF](https://github.com/tantanGH/rssn/raw/main/X68Z_RSSN_20230609.XDF)
+[X68Z_RSSN_20230614.XDF](https://github.com/tantanGH/rssn/raw/main/X68Z_RSSN_20230614.XDF)
 
 ---
 

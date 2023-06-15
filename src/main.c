@@ -7,7 +7,7 @@
 #include "uart.h"
 #include "rss.h"
 
-#define PROGRAM_VERSION "0.5.1"
+#define PROGRAM_VERSION "0.5.2"
 
 //
 //  helper: vdisp interrupt handler for progress bar display

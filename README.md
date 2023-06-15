@@ -62,7 +62,7 @@ RSSNxxx.ZIP をダウンロードし、新規ディレクトリに展開する�
 
 X68000Z の場合はこちらの起動用XDFを使うと既に構成済みですので手軽です。
 
-[X68Z_RSSN_20230614.XDF](https://github.com/tantanGH/rssn/raw/main/X68Z_RSSN_20230614.XDF)
+[X68Z_RSSN_20230616.XDF](https://github.com/tantanGH/rssn/raw/main/X68Z_RSSN_20230616.XDF)
 
 ---
 
@@ -81,6 +81,7 @@ X68000Z の場合はこちらの起動用XDFを使うと既に構成済みです
 
 RSSN.X 及び関連ファイル:
 
+* 0.5.3 (2023/06/16) ... 環境変数 RSSN_QUIET, RSSN_STDOUT 追加
 * 0.5.2 (2023/06/15) ... DOCファイル一部修正, XDF更新
 * 0.5.0 (2023/06/10) ... 初版
 

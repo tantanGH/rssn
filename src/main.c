@@ -7,7 +7,7 @@
 #include "uart.h"
 #include "rss.h"
 
-#define PROGRAM_VERSION "0.5.2"
+#define PROGRAM_VERSION "0.5.3"
 
 //
 //  helper: vdisp interrupt handler for progress bar display
@@ -33,13 +33,14 @@ static void show_help_message() {
   printf("RSSN.X - RSSN client for X680x0/Human68k version " PROGRAM_VERSION " by tantan\n");
   printf("usage: rssn [options] <rss-url> [output-file]\n");
   printf("options:\n");
-  printf("     -s <speed> ... baud rate (9600/19200/38400) (default:38400)\n");
+//  printf("     -s <speed> ... baud rate (9600/19200/38400) (default:38400)\n");
   printf("     -h         ... show help message\n");
+  printf("environment variables:\n");
+  printf("     RSSN_SPEED   ... baud rate (9600/19200/38400)\n");
+  printf("     RSSN_TIMEOUT ... timeout [sec]\n");
+  printf("     RSSN_QUIET   ... 0 or none:show progress(default)  1:no progress\n");
+  printf("     RSSN_STDOUT  ... 0 or none:write to file  1:write to stdout\n");
 }
-
-// env var buffers
-static uint8_t env_rssn_speed[ 256 ];
-static uint8_t env_rssn_timeout[ 256 ];
 
 //
 //  main
@@ -49,18 +50,27 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
   // default return code
   int32_t rc = -1;
 
+  // env variable access buffer
+  uint8_t env_var_buffer[ 256 ];
+
   // baud rate
-  int32_t baud_rate = GETENV("RSSN_SPEED", NULL, env_rssn_speed) >= 0 ? atoi(env_rssn_speed) : 38400;
+  int32_t baud_rate = GETENV("RSSN_SPEED", NULL, env_var_buffer) >= 0 ? atoi(env_var_buffer) : 38400;
 
   // timeout
-  int32_t timeout = GETENV("RSSN_TIMEOUT", NULL, env_rssn_timeout) >= 0 ? atoi(env_rssn_timeout) : 60;
+  int32_t timeout = GETENV("RSSN_TIMEOUT", NULL, env_var_buffer) >= 0 ? atoi(env_var_buffer) : 60;
+
+  // quiet mode
+  int16_t quiet_mode = GETENV("RSSN_QUIET", NULL, env_var_buffer) >= 0 ? atoi(env_var_buffer) : 0;
+
+  // stdout mode
+  int16_t stdout_mode = GETENV("RSSN_STDOUT", NULL, env_var_buffer) >= 0 ? atoi(env_var_buffer) : 0;
 
   // rss url
   uint8_t* rss_url = NULL;
 
   // output file name
   uint8_t output_file_name[ 256 ];
-  strcpy(output_file_name, "_R.D");
+  strcpy(output_file_name, "_R.D");   // default
 
   // output file handle
   FILE* fo = NULL;
@@ -77,10 +87,11 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
   // parse command lines
   for (int16_t i = 1; i < argc; i++) {
     if (argv[i][0] == '-' && strlen(argv[i]) >= 2) {
-      if (argv[i][1] == 's' && i+1 < argc) {
-        baud_rate = atoi(argv[i+1]);
-        i++;
-      } else if (argv[i][1] == 'h') {
+//      if (argv[i][1] == 's' && i+1 < argc) {
+//        baud_rate = atoi(argv[i+1]);
+//        i++;
+//      } else 
+      if (argv[i][1] == 'h') {
         show_help_message();
         goto exit;
       } else {
@@ -109,10 +120,10 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
 try:
 
   // cursor off
-  C_CUROFF();
+  if (!quiet_mode) C_CUROFF();
 
   // function key off
-  C_FNKMOD(3);
+  if (!quiet_mode) C_FNKMOD(3);
 
   // open uart  
   if (uart_open(&uart, baud_rate, timeout) != 0) {
@@ -125,15 +136,16 @@ try:
   }
 
   // open output file in binary mode
-  if ((fo = fopen(output_file_name, "wb")) == NULL) {
+  fo = stdout_mode ? stdout : fopen(output_file_name, "wb");
+  if (fo == NULL) {
     goto catch;
   } 
 
   // message
-  B_PUTMES(7, 0, 31, 32, "Now Loading... [ESC] to cancel ");
+  if (!quiet_mode) B_PUTMES(7, 0, 31, 32, "Now Loading... [ESC] to cancel ");
 
   // vsync interrupt for progress bar
-  VDISPST((uint8_t*)vdisp_handler, 0, 55);
+  if (!quiet_mode) VDISPST((uint8_t*)vdisp_handler, 0, 55);
 
   // download channel items
   int32_t download_result = rss_download_channel_dshell(&rss, rss_url, fo, &uart);
@@ -150,10 +162,10 @@ try:
 catch:
 
   // stop vsync interrupt handler
-  VDISPST(0, 0, 0);
+  if (!quiet_mode) VDISPST(0, 0, 0);
 
   // close output file handle
-  if (fo != NULL) {
+  if (!stdout_mode && fo != NULL) {
     fclose(fo);
     fo = NULL;
   }
@@ -170,10 +182,10 @@ catch:
   }
 
   // cursor on
-  C_CURON();
+  if (!quiet_mode) C_CURON();
 
   // resume function key mode
-  C_FNKMOD(func_mode);
+  if (!quiet_mode) C_FNKMOD(func_mode);
 
 exit:
 

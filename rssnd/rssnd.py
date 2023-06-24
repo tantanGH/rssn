@@ -150,15 +150,15 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
 
             # 残りのタイトルと日付、本文、横barを出力
             res += f"""
-  %V%W{t}\u0018
+%V%W{t}\u0018
 
 
-  日付：{dt}
+日付：{dt}
 
-  {s}
+{s}
 
-  {HORIZONTAL_BAR}
-  """
+{HORIZONTAL_BAR}
+"""
 
           # 最後の記事の後には [EOF] マーカーを出力しておく
           res += "\n[EOF]\n"

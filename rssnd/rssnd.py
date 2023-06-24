@@ -189,12 +189,12 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, alsa_devic
 
         except Exception as e:
           if verbose:
-            print(f"bad request [{body_str}]")
+            print(f"bad request [{request_body_str}]")
           respond(port, RESPONSE_BAD_REQUEST)
 
       else:
         if verbose:
-          print(f"unknown request [{body_str}]")
+          print(f"unknown request [{request_body_str}]")
         respond(port, RESPONSE_BAD_REQUEST)
 
     print("Stopped.")

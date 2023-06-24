@@ -120,7 +120,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, alsa_devic
             while s44rasp_proc.poll() is None:
               s44rasp_proc.kill()
 
-          s44rasp_proc = subprocess.Popen("s44rasp", "-d", alsa_device, "-o", pcm_file_name)
+          s44rasp_proc = subprocess.Popen(["s44rasp", "-d", alsa_device, "-o", pcm_file_name], shell=False)
 
         else:
           respond(port, RESPONSE_NOT_FOUND, "file not found.")

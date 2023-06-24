@@ -108,67 +108,74 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
       # request handler - dshell
       elif request_body_str.startswith("/dshell?link="):
 
-        # get RSS feed from Internet
-        feed_content = requests.get(request_body_str[13:])
-        feed = feedparser.parse(feed_content.text)
+        try:
 
-        res = ""
+          # get RSS feed from Internet
+          feed_content = requests.get(request_body_str[13:])
+          feed = feedparser.parse(feed_content.text)
 
-        # 極端なレスポンスの悪化を避けるため、記事は max_entries で指定された数だけにする(デフォルト100)
-        entries = feed.entries[:max_entries]
-        for e in entries:
+          res = ""
 
-          t = e.title if hasattr(e, 'title') else ""
-          s = e.summary if hasattr(e, 'summary') else ""
-          tm = time.mktime(e.updated_parsed) + 9 * 3600
-          dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
+          # 極端なレスポンスの悪化を避けるため、記事は max_entries で指定された数だけにする(デフォルト100)
+          entries = feed.entries[:max_entries]
+          for e in entries:
 
-          title_sjis_bytes = t.encode('cp932', errors="backslashreplace")
+            t = e.title if hasattr(e, 'title') else ""
+            s = e.summary if hasattr(e, 'summary') else ""
+            tm = time.mktime(e.updated_parsed) + 9 * 3600
+            dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
 
-          ofs_bytes = 0
-          num_chars = 0
+            title_sjis_bytes = t.encode('cp932', errors="backslashreplace")
 
-          # タイトルを24dotフォントで表示する場合、折り返しが発生すると表示が重なってしまう。
-          # そのためいい感じのところで行を切り、1行空行を間に挟むようにする。
-          # この時 SJIS にして桁数を計算した上で、元の UTF8 の文字列を該当位置でカットする必要がある。
-          while len(title_sjis_bytes) > 62:
+            ofs_bytes = 0
+            num_chars = 0
 
-            c = title_sjis_bytes[ ofs_bytes ]
-            if (c >= 0x81 and c <= 0x9f) or (c >= 0xe0 and c <= 0xef):
+            # タイトルを24dotフォントで表示する場合、折り返しが発生すると表示が重なってしまう。
+            # そのためいい感じのところで行を切り、1行空行を間に挟むようにする。
+            # この時 SJIS にして桁数を計算した上で、元の UTF8 の文字列を該当位置でカットする必要がある。
+            while len(title_sjis_bytes) > 62:
+
+              c = title_sjis_bytes[ ofs_bytes ]
+              if (c >= 0x81 and c <= 0x9f) or (c >= 0xe0 and c <= 0xef):
+                ofs_bytes += 1
+
               ofs_bytes += 1
+              num_chars += 1
+              if ofs_bytes >= 61:
+                res += f"\n%V%W{t[:num_chars]}\u0018\n"
+                t = t[num_chars:]
+                title_sjis_bytes = title_sjis_bytes[ofs_bytes:]
+                ofs_bytes = 0
+                num_chars = 0
 
-            ofs_bytes += 1
-            num_chars += 1
-            if ofs_bytes >= 61:
-              res += f"\n%V%W{t[:num_chars]}\u0018\n"
-              t = t[num_chars:]
-              title_sjis_bytes = title_sjis_bytes[ofs_bytes:]
-              ofs_bytes = 0
-              num_chars = 0
-
-          # 残りのタイトルと日付、本文、横barを出力
-          res += f"""
-%V%W{t}\u0018
+            # 残りのタイトルと日付、本文、横barを出力
+            res += f"""
+  %V%W{t}\u0018
 
 
-日付：{dt}
+  日付：{dt}
 
-{s}
+  {s}
 
-{HORIZONTAL_BAR}
-"""
+  {HORIZONTAL_BAR}
+  """
 
-        # 最後の記事の後には [EOF] マーカーを出力しておく
-        res += "\n[EOF]\n"
+          # 最後の記事の後には [EOF] マーカーを出力しておく
+          res += "\n[EOF]\n"
 
-        if verbose:
-          print(f"returned {len(entries)} items.")
+          if verbose:
+            print(f"returned {len(entries)} items.")
 
-        respond(port, RESPONSE_OK, res)
+          respond(port, RESPONSE_OK, res)
+
+        except Exception as e:
+          if verbose:
+            print(f"unknown request [{request_body_str}]")
+          respond(port, RESPONSE_BAD_REQUEST)
 
       else:
         if verbose:
-          print(f"unknown request [{body_str}]")
+          print(f"unknown request [{request_body_str}]")
         respond(port, RESPONSE_BAD_REQUEST)
 
     print("Stopped.")

@@ -46,7 +46,7 @@ def respond(port, code, body=""):
   port.flush()
 
 # service loop
-def run_service(serial_device, serial_baudrate, max_entries, verbose):
+def run_service(serial_device, serial_baudrate, max_entries, verbose, alsa_device, pcm_path):
 
   # set signal handler
   signal.signal(signal.SIGINT, sigint_handler)
@@ -65,6 +65,8 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
 
     global g_abort_service
     g_abort_service = False
+
+    s44rasp_proc = None
 
     while g_abort_service is False:
 
@@ -104,6 +106,23 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
         if verbose:
           print(f"response: [{API_VERSION}]")
         respond(port, RESPONSE_OK, API_VERSION)
+
+      # request handler - 16bit PCM play with s44rasp
+      elif request_body_str.startswith("/pcmplay?path="):
+
+        pcm_file_name = pcm_path + "/" + request_body_str[14:]
+        if os.path.isfile(pcm_file_name):
+          pcm_file_size = os.path.getsize(pcm_file_name)
+          respond(port, RESPONSE_OK, f"found PCM data ({pcm_file_size} bytes).")
+
+          if s44rasp_proc is not None:
+            while s44rasp_proc.poll() is None:
+              s44rasp_proc.kill()
+
+          s44rasp_proc = subprocess.Popen("s44rasp", "-d", alsa_device, "-o", pcm_file_name)
+
+        else:
+          respond(port, RESPONSE_NOT_FOUND, "file not found.")
 
       # request handler - dshell
       elif request_body_str.startswith("/dshell?link="):
@@ -178,14 +197,16 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-d","--device", help="serial device name", default='/dev/serial0')
-    parser.add_argument("-s","--baudrate", help="baud rate", type=int, default=19200)
-    parser.add_argument("-e","--entries", help="max item entries", type=int, default=100)
-    parser.add_argument("-v","--verbose", help="verbose mode", action='store_true', default=False)
+    parser.add_argument("-d", "--device", help="serial device name", default='/dev/serial0')
+    parser.add_argument("-s", "--baudrate", help="baud rate", type=int, default=19200)
+    parser.add_argument("-e", "--entries", help="max item entries", type=int, default=100)
+    parser.add_argument("-v", "--verbose", help="verbose mode", action='store_true', default=False)
+    parser.add_argument("-a", "--alsadevice", help="alsa device name", default="hw:3,0")
+    parser.add_argument("-p", "--pcmpath", help="pcm data path")
  
     args = parser.parse_args()
 
-    run_service(args.device, args.baudrate, args.entries, args.verbose)
+    run_service(args.device, args.baudrate, args.entries, args.verbose, args.alsadevice, args.pcmpath)
 
 
 if __name__ == "__main__":

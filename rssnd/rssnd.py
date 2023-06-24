@@ -6,9 +6,10 @@ import signal
 import serial
 import requests
 import feedparser
+import subprocess
 
 # API version
-API_VERSION = "0.1"
+API_VERSION = "0.2"
 
 # response codes
 RESPONSE_OK                     = 200

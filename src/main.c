@@ -7,7 +7,7 @@
 #include "uart.h"
 #include "rss.h"
 
-#define PROGRAM_VERSION "0.5.3"
+#define PROGRAM_VERSION "0.5.4pcm"
 
 //
 //  helper: vdisp interrupt handler for progress bar display
@@ -34,6 +34,7 @@ static void show_help_message() {
   printf("usage: rssn [options] <rss-url> [output-file]\n");
   printf("options:\n");
 //  printf("     -s <speed> ... baud rate (9600/19200/38400) (default:38400)\n");
+  printf("     -p         ... play pcm\n");
   printf("     -h         ... show help message\n");
   printf("environment variables:\n");
   printf("     RSSN_SPEED   ... baud rate (9600/19200/38400)\n");
@@ -68,6 +69,9 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
   // rss url
   uint8_t* rss_url = NULL;
 
+  // pcm mode
+  int16_t pcm_mode = 0;
+
   // output file name
   uint8_t output_file_name[ 256 ];
   strcpy(output_file_name, "_R.D");   // default
@@ -87,11 +91,11 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
   // parse command lines
   for (int16_t i = 1; i < argc; i++) {
     if (argv[i][0] == '-' && strlen(argv[i]) >= 2) {
-//      if (argv[i][1] == 's' && i+1 < argc) {
-//        baud_rate = atoi(argv[i+1]);
-//        i++;
-//      } else 
-      if (argv[i][1] == 'h') {
+      if (argv[i][1] == 'p') {
+        pcm_mode = 1;
+        quiet_mode = 1;
+        stdout_mode = 1;
+      } else if (argv[i][1] == 'h') {
         show_help_message();
         goto exit;
       } else {
@@ -148,7 +152,8 @@ try:
   if (!quiet_mode) VDISPST((uint8_t*)vdisp_handler, 0, 55);
 
   // download channel items
-  int32_t download_result = rss_download_channel_dshell(&rss, rss_url, fo, &uart);
+  int32_t download_result = pcm_mode ? rss_play_pcm(&rss, rss_url, &uart) : 
+                                       rss_download_channel_dshell(&rss, rss_url, fo, &uart);
     
   // check communication result
   if (download_result == UART_QUIT || download_result == UART_EXIT) {

@@ -18,5 +18,6 @@ int32_t rss_open(RSS* rss);
 void rss_close(RSS* rss);
 
 int32_t rss_download_channel_dshell(RSS* rss, const char* rss_url, FILE* output_file, UART* uart);
+int32_t rss_play_pcm(RSS* rss, const char* pcm_path, UART* uart);
 
 #endif

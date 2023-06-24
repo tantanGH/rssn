@@ -108,6 +108,19 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, alsa_devic
           print(f"response: [{API_VERSION}]")
         respond(port, RESPONSE_OK, API_VERSION)
 
+      # request handler - 16bit PCM stop
+      elif request_body_str.startswith("/pcmstop"):
+
+        if s44rasp_proc is not None:
+          while s44rasp_proc.poll() is None:
+            s44rasp_proc.kill()
+          s44rasp_proc = None
+
+        respond(port, RESPONSE_OK, f"stopped.")
+
+        else:
+          respond(port, RESPONSE_NOT_FOUND, "file not found.")
+
       # request handler - 16bit PCM play with s44rasp
       elif request_body_str.startswith("/pcmplay?path="):
 

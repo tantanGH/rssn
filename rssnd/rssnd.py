@@ -108,16 +108,13 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, alsa_devic
           print(f"response: [{API_VERSION}]")
         respond(port, RESPONSE_OK, API_VERSION)
 
-      # request handler - 16bit PCM stop
-      elif request_body_str.startswith("/pcmstop"):
+      # request handler - 16bit PCM existence check with s44rasp
+      elif request_body_str.startswith("/pcmhead?path="):
 
-        if s44rasp_proc is not None:
-          while s44rasp_proc.poll() is None:
-            s44rasp_proc.kill()
-          s44rasp_proc = None
-
-        respond(port, RESPONSE_OK, f"stopped.")
-
+        pcm_file_name = pcm_path + "/" + request_body_str[14:]
+        if os.path.isfile(pcm_file_name):
+          pcm_file_size = os.path.getsize(pcm_file_name)
+          respond(port, RESPONSE_OK, f"{pcm_file_size}")
         else:
           respond(port, RESPONSE_NOT_FOUND, "file not found.")
 
@@ -127,7 +124,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, alsa_devic
         pcm_file_name = pcm_path + "/" + request_body_str[14:]
         if os.path.isfile(pcm_file_name):
           pcm_file_size = os.path.getsize(pcm_file_name)
-          respond(port, RESPONSE_OK, f"found PCM data ({pcm_file_size} bytes).")
+          respond(port, RESPONSE_OK, f"{pcm_file_size}")
 
           if s44rasp_proc is not None:
             while s44rasp_proc.poll() is None:
@@ -137,6 +134,16 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, alsa_devic
 
         else:
           respond(port, RESPONSE_NOT_FOUND, "file not found.")
+
+      # request handler - 16bit PCM stop
+      elif request_body_str.startswith("/pcmstop"):
+
+        if s44rasp_proc is not None:
+          while s44rasp_proc.poll() is None:
+            s44rasp_proc.kill()
+          s44rasp_proc = None
+
+        respond(port, RESPONSE_OK, f"stopped.")
 
       # request handler - dshell
       elif request_body_str.startswith("/dshell?link="):

@@ -7,7 +7,7 @@
 #include "uart.h"
 #include "rss.h"
 
-#define PROGRAM_VERSION "0.5.4"
+#define PROGRAM_VERSION "0.5.5 (2023/07/12)"
 
 //
 //  helper: vdisp interrupt handler for progress bar display
@@ -30,7 +30,7 @@ static void __attribute__((interrupt)) vdisp_handler() {
 //  helper: show help message
 //
 static void show_help_message() {
-  printf("RSSN.X - RSSN client for X680x0/Human68k version " PROGRAM_VERSION " by tantan\n");
+  printf("RSSN.X - RSSN client for X680x0/Human68k " PROGRAM_VERSION " by tantan\n");
   printf("usage: rssn [options] <rss-url> [output-file]\n");
   printf("options:\n");
 //  printf("     -s <speed> ... baud rate (9600/19200/38400) (default:38400)\n");
@@ -148,27 +148,51 @@ try:
 
   // datetime sync mode
   if (datetime_sync_mode) {
-    uint8_t ts[128];
-    if (rss_datetime(&rss, tz, ts, 128, &uart) == 0) {
-      printf("RSSN Server Date/Time: %s\n", ts);
-      ts[4] = '\0';
-      ts[7] = '\0';
-      ts[10] = '\0';
-      ts[13] = '\0';
-      ts[16] = '\0';
-      ts[19] = '\0';
-      int16_t year = atoi(ts) - 1980;
-      int16_t month = atoi(ts+5);
-      int16_t day = atoi(ts+8);
-      int16_t hour = atoi(ts+11);
-      int16_t min = atoi(ts+14);
-      int16_t sec = atoi(ts+17);
+
+    uint8_t ts0[128];
+    uint8_t ts1[128];
+
+    // get the current time
+    if (rss_datetime(&rss, tz, ts0, 127, &uart) != 0) {
+      printf("error: datetime sync error.\n");
+      goto catch;
+    }
+    ts0[19] = '\0';
+
+    for (;;) {
+
+      // check the next second timing
+      if (rss_datetime(&rss, tz, ts1, 127, &uart) != 0) {
+        printf("error: datetime sync error.\n");
+        goto catch;
+      }
+      ts1[19] = '\0';
+      if (strcmp(ts0, ts1) == 0) {
+        for (uint32_t t0 = ONTIME(); ONTIME() < t0 + 10; ) {}   // wait 100msec
+        continue;
+      }
+
+      printf("RSSN Server Date/Time: %s\n", ts1);
+      ts1[4] = '\0';
+      ts1[7] = '\0';
+      ts1[10] = '\0';
+      ts1[13] = '\0';
+      ts1[16] = '\0';
+      
+      int16_t hour = atoi(ts1+11);
+      int16_t min = atoi(ts1+14);
+      int16_t sec = atoi(ts1+17);
+      SETTIM2((hour << 16) | (min << 8) | sec);
+      
+      int16_t year = atoi(ts1) - 1980;
+      int16_t month = atoi(ts1+5);
+      int16_t day = atoi(ts1+8);
       SETDATE((year << 9) | (month << 5) | day);
-      SETTIME((hour << 11) | (min << 5) | sec);
+      
       printf("Synchronized.\n");
       rc = 0;
-    } else {
-      printf("error: datetime sync error.\n");
+      break;
+
     }
     goto catch;
   }

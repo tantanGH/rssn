@@ -26,7 +26,7 @@ TARGET_FILE = RSSN.X
 RESOURCE_FILES = resources/INDEX.DOC resources/SETUP.DOC resources/SETUPZ.DOC resources/RSSN.CUT
 
 # Distribution package 
-PACKAGE_FILE = ../RSSN054.ZIP
+PACKAGE_FILE = ../RSSN055.ZIP
 
 # ヘッダ検索パス
 INCLUDE_FLAGS = -I${XDEV68K_DIR}/include/xc -I${XDEV68K_DIR}/include/xdev68k

@@ -105,6 +105,27 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
           print(f"response: [{API_VERSION}]")
         respond(port, RESPONSE_OK, API_VERSION)
 
+      # request handler - datetime with tz
+      elif request_body_str.startswith("/datetime?tz="):
+        try:
+          tz = int(request_body_str[13:])
+          dt = datetime.datetime.utcnow() + datetime.timedelta(hours=tz)
+          if verbose:
+            print(f"response: [{str(dt)}]")
+          respond(port, RESPONSE_OK, str(dt))
+        except:
+          respond(port, RESPONSE_BAD_REQUEST, "")
+
+      # request handler - datetime
+      elif request_body_str.startswith("/datetime"):
+        try:
+          dt = datetime.datetime.utcnow()
+          if verbose:
+            print(f"response: [{str(dt)}]")
+          respond(port, RESPONSE_OK, str(dt))
+        except:
+          respond(port, RESPONSE_BAD_REQUEST, "")
+
       # request handler - dshell
       elif request_body_str.startswith("/dshell?link="):
 

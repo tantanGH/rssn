@@ -7,7 +7,7 @@
 #include "uart.h"
 #include "rss.h"
 
-#define PROGRAM_VERSION "0.5.3"
+#define PROGRAM_VERSION "0.5.4"
 
 //
 //  helper: vdisp interrupt handler for progress bar display
@@ -34,7 +34,8 @@ static void show_help_message() {
   printf("usage: rssn [options] <rss-url> [output-file]\n");
   printf("options:\n");
 //  printf("     -s <speed> ... baud rate (9600/19200/38400) (default:38400)\n");
-  printf("     -h         ... show help message\n");
+  printf("     -t[tz] ... sync date/time with rssn server\n");
+  printf("     -h     ... show help message\n");
   printf("environment variables:\n");
   printf("     RSSN_SPEED   ... baud rate (9600/19200/38400)\n");
   printf("     RSSN_TIMEOUT ... timeout [sec]\n");
@@ -65,6 +66,10 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
   // stdout mode
   int16_t stdout_mode = GETENV("RSSN_STDOUT", NULL, env_var_buffer) >= 0 ? atoi(env_var_buffer) : 0;
 
+  // date/time sync mode
+  int16_t datetime_sync_mode = 0;
+  int16_t tz = 9;
+
   // rss url
   uint8_t* rss_url = NULL;
 
@@ -94,6 +99,12 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
       if (argv[i][1] == 'h') {
         show_help_message();
         goto exit;
+      } else if (argv[i][1] == 't') {
+        datetime_sync_mode = 1;
+        quiet_mode = 1;
+        if (strlen(argv[i]) > 2) {
+          tz = atoi(argv[i]+2);
+        }
       } else {
         printf("error: unknown option (%s).\n",argv[i]);
         goto exit;
@@ -112,7 +123,7 @@ int32_t main(int32_t argc, uint8_t* argv[]) {
     goto exit;
   }
 
-  if (rss_url == NULL) {
+  if (!datetime_sync_mode && rss_url == NULL) {
     show_help_message();
     goto exit;
   }
@@ -132,6 +143,33 @@ try:
 
   // open rss
   if (rss_open(&rss) != 0) {
+    goto catch;
+  }
+
+  // datetime sync mode
+  if (datetime_sync_mode) {
+    uint8_t ts[128];
+    if (rss_datetime(&rss, tz, ts, 128, &uart) == 0) {
+      printf("RSSN Server Date/Time: %s\n", ts);
+      ts[4] = '\0';
+      ts[7] = '\0';
+      ts[10] = '\0';
+      ts[13] = '\0';
+      ts[16] = '\0';
+      ts[19] = '\0';
+      int16_t year = atoi(ts) - 1980;
+      int16_t month = atoi(ts+5);
+      int16_t day = atoi(ts+8);
+      int16_t hour = atoi(ts+11);
+      int16_t min = atoi(ts+14);
+      int16_t sec = atoi(ts+17);
+      SETDATE((year << 9) | (month << 5) | day);
+      SETTIME((hour << 11) | (min << 5) | sec);
+      printf("Synchronized.\n");
+      rc = 0;
+    } else {
+      printf("error: datetime sync error.\n");
+    }
     goto catch;
   }
 

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="rssnd",
-    version="0.5.5",
+    version="0.6.0e1",
     author="tantanGH",
     author_email="tantanGH@github",
     license='MIT',
@@ -26,5 +26,5 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.7",
     setup_requires=["setuptools"],
-    install_requires=["pyserial","feedparser","requests"],
+    install_requires=["pyserial", "feedparser", "requests", "scrapingbee"],
 )

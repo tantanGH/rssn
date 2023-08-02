@@ -6,6 +6,7 @@ import signal
 import serial
 import requests
 import feedparser
+import subprocess
 
 # API version
 API_VERSION = "0.1"
@@ -46,7 +47,7 @@ def respond(port, code, body=""):
   port.flush()
 
 # service loop
-def run_service(serial_device, serial_baudrate, max_entries, verbose):
+def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, alsa_device, use_oled, mcs_wait):
 
   # set signal handler
   signal.signal(signal.SIGINT, sigint_handler)
@@ -65,6 +66,8 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
 
     global g_abort_service
     g_abort_service = False
+
+    s44rasp_proc = None
 
     while g_abort_service is False:
 
@@ -125,6 +128,56 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose):
           respond(port, RESPONSE_OK, str(dt))
         except:
           respond(port, RESPONSE_BAD_REQUEST, "")
+
+      # request handler - 16bit PCM existence check with s44rasp
+      elif request_body_str.startswith("/pcmhead?path="):
+
+        request_path = request_body_str[14:]
+        if ".." in request_path:
+          respond(port, RESPONSE_BAD_REQUEST, "")
+        else:
+          pcm_file_name = pcm_path + "/" + request_path
+          if os.path.isfile(pcm_file_name):
+            pcm_file_size = os.path.getsize(pcm_file_name)
+            respond(port, RESPONSE_OK, f"{pcm_file_size}")
+          else:
+            respond(port, RESPONSE_NOT_FOUND, "file not found.")
+
+      # request handler - 16bit PCM play with s44rasp
+      elif request_body_str.startswith("/pcmplay?path="):
+
+        request_path = request_body_str[14:]
+        if ".." in request_path:
+          respond(port, RESPONSE_BAD_REQUEST, "")
+        else:
+          pcm_file_name = pcm_path + "/" + request_path
+          if os.path.isfile(pcm_file_name):
+            pcm_file_size = os.path.getsize(pcm_file_name)
+            respond(port, RESPONSE_OK, f"{pcm_file_size}")
+            if s44rasp_proc is not None:
+              while s44rasp_proc.poll() is None:
+                s44rasp_proc.send_signal(signal.SIGINT)
+                time.sleep(0.2)
+            if request_path[-4:].lower() == ".mcs":
+              time.sleep(mcs_wait / 1000.0)
+            if use_oled:
+              s44rasp_proc = subprocess.Popen(["s44rasp", "-d", alsa_device, "-o", pcm_file_name], shell=False)
+            else:
+              s44rasp_proc = subprocess.Popen(["s44rasp", "-d", alsa_device, pcm_file_name], shell=False)
+          else:
+            respond(port, RESPONSE_NOT_FOUND, "file not found.")
+
+      # request handler - 16bit PCM stop
+      elif request_body_str.startswith("/pcmstop"):
+        if s44rasp_proc is not None:
+          while s44rasp_proc.poll() is None:
+            s44rasp_proc.send_signal(signal.SIGINT)
+            time.sleep(0.2)
+          s44rasp_proc = None
+        respond(port, RESPONSE_OK, f"stopped.")
+      else:
+        print(f"unknown request [{request_body_str}]")
+        respond(port, RESPONSE_BAD_REQUEST)
 
       # request handler - dshell
       elif request_body_str.startswith("/dshell?link="):
@@ -210,10 +263,15 @@ def main():
     parser.add_argument("-s","--baudrate", help="baud rate", type=int, default=19200)
     parser.add_argument("-e","--entries", help="max item entries", type=int, default=100)
     parser.add_argument("-v","--verbose", help="verbose mode", action='store_true', default=False)
- 
+
+    parser.add_argument("-p", "--pcmpath", help="pcm data path", default=".")
+    parser.add_argument("-a", "--alsa", help="alsa device name", default="default")
+    parser.add_argument("-o", "--oled", help="oled display", action='store_true')
+    parser.add_argument("-w", "--mcswait", help="wait msec for mcs data", type=int, default=2290) 
+
     args = parser.parse_args()
 
-    run_service(args.device, args.baudrate, args.entries, args.verbose)
+    run_service(args.device, args.baudrate, args.entries, args.verbose, args.pcmpath, args.alsa, args.oled, args.mcswait)
 
 
 if __name__ == "__main__":

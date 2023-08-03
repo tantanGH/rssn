@@ -12,6 +12,9 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+CHROME_BIN = "/usr/bin/chromium-browser"
+CHROME_DRIVER = '/usr/lib/chromium-browser/chromedriver'
+
 # API version
 API_VERSION = "0.1"
 
@@ -117,13 +120,14 @@ def get_rss_response(url, max_entries):
 
 # get Z-Club response
 def get_zclub_response(url, max_entries):
-
+  
   try:
 
     opts = Options()
     opts.add_argument("--headless=new")
-    driver = webdriver.Chrome(options=opts)
+    opts.binary_location = CHROME_BIN
 
+    driver = webdriver.Chrome(CHROME_DRIVER, options=opts)
     driver.get(url)
 
     html = driver.page_source.encode('utf-8')
@@ -196,6 +200,7 @@ Z-CLUBガイドラインを制定しました。Webブラウザからご一読�
     driver.quit()
 
   except Exception as e:
+    print(e)
     res = None
 
   return res

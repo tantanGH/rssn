@@ -7,6 +7,10 @@ import serial
 import requests
 import feedparser
 import subprocess
+import chromedriver_binary
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 # API version
 API_VERSION = "0.1"
@@ -45,6 +49,156 @@ def respond(port, code, body=""):
   res.extend(body_bytes)
   port.write(res)
   port.flush()
+
+# get RSS response
+def get_rss_response(url, max_entries):
+
+  res = None
+
+  try:
+
+    # get RSS feed from Internet
+    feed_content = requests.get(url)
+    feed = feedparser.parse(feed_content.text)
+
+    res = ""
+
+    # 極端なレスポンスの悪化を避けるため、記事は max_entries で指定された数だけにする(デフォルト100)
+    entries = feed.entries[:max_entries]
+    for e in entries:
+
+      t = e.title if hasattr(e, 'title') else ""
+      s = e.summary if hasattr(e, 'summary') else ""
+      tm = time.mktime(e.updated_parsed) + 9 * 3600
+      dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
+
+      title_sjis_bytes = t.encode('cp932', errors="backslashreplace")
+
+      ofs_bytes = 0
+      num_chars = 0
+
+      # タイトルを24dotフォントで表示する場合、折り返しが発生すると表示が重なってしまう。
+      # そのためいい感じのところで行を切り、1行空行を間に挟むようにする。
+      # この時 SJIS にして桁数を計算した上で、元の UTF8 の文字列を該当位置でカットする必要がある。
+      while len(title_sjis_bytes) > 62:
+
+        c = title_sjis_bytes[ ofs_bytes ]
+        if (c >= 0x81 and c <= 0x9f) or (c >= 0xe0 and c <= 0xef):
+          ofs_bytes += 1
+
+        ofs_bytes += 1
+        num_chars += 1
+        if ofs_bytes >= 61:
+          res += f"\n%V%W{t[:num_chars]}\u0018\n"
+          t = t[num_chars:]
+          title_sjis_bytes = title_sjis_bytes[ofs_bytes:]
+          ofs_bytes = 0
+          num_chars = 0
+
+      # 残りのタイトルと日付、本文、横barを出力
+      res += f"""
+%V%W{t}\u0018
+
+
+日付：{dt}
+
+{s}
+
+{HORIZONTAL_BAR}
+"""
+
+    # 最後の記事の後には [EOF] マーカーを出力しておく
+    res += "\n[EOF]\n"
+
+  except Exception as e:
+    res = None
+
+  return res
+
+# get Z-Club response
+def get_zclub_response(url, max_entries):
+
+  try:
+
+    opts = Options()
+    opts.add_argument("--headless=new")
+    driver = webdriver.Chrome(options=opts)
+
+    driver.get(url)
+
+    html = driver.page_source.encode('utf-8')
+    soup = BeautifulSoup(html, 'html.parser')
+
+    res = f"""
+
+%V%WZ-CLUB コミュニティサイト
+
+
+      %CUT:+-ZCLUB.CUT
+      %CUT
+      %CUT
+      %CUT
+      %CUT
+      %CUT
+      %CUT
+      %CUT
+      %CUT
+
+Z-CLUBガイドラインを制定しました。Webブラウザからご一読お願いします。
+
+{HORIZONTAL_BAR}
+
+"""
+      
+    for e in soup.find_all('div', attrs={'class':'post-card'}):
+
+      t = e.find('h1').text.strip()
+      s = e.find('p').text.strip()
+
+      spans = e.find_all('span')
+      dt = spans[2].text.strip()
+      author = spans[3].text.strip()
+      
+      title_sjis_bytes = t.encode('cp932', errors="backslashreplace")
+
+      ofs_bytes = 0
+      num_chars = 0
+
+      while len(title_sjis_bytes) > 62:
+
+        c = title_sjis_bytes[ ofs_bytes ]
+        if (c >= 0x81 and c <= 0x9f) or (c >= 0xe0 and c <= 0xef):
+          ofs_bytes += 1
+
+        ofs_bytes += 1
+        num_chars += 1
+        if ofs_bytes >= 61:
+          res += f"\n%V%W{t[:num_chars]}\u0018\n"
+          t = t[num_chars:]
+          title_sjis_bytes = title_sjis_bytes[ofs_bytes:]
+          ofs_bytes = 0
+          num_chars = 0
+
+        res += f"""
+%V%W{t}\u0018
+
+
+投稿者：{author}
+投稿日時：{dt}
+
+{s}
+
+{HORIZONTAL_BAR}
+"""
+
+    res += "\n[EOF]\n"
+
+    driver.quit()
+
+  except Exception as e:
+    res = None
+
+  return res
 
 # service loop
 def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, alsa_device, use_oled, mcs_wait):
@@ -175,81 +329,23 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
             time.sleep(0.2)
           s44rasp_proc = None
         respond(port, RESPONSE_OK, f"stopped.")
-      else:
-        print(f"unknown request [{request_body_str}]")
-        respond(port, RESPONSE_BAD_REQUEST)
 
       # request handler - dshell
       elif request_body_str.startswith("/dshell?link="):
-
-        try:
-
-          # get RSS feed from Internet
-          feed_content = requests.get(request_body_str[13:])
-          feed = feedparser.parse(feed_content.text)
-
-          res = ""
-
-          # 極端なレスポンスの悪化を避けるため、記事は max_entries で指定された数だけにする(デフォルト100)
-          entries = feed.entries[:max_entries]
-          for e in entries:
-
-            t = e.title if hasattr(e, 'title') else ""
-            s = e.summary if hasattr(e, 'summary') else ""
-            tm = time.mktime(e.updated_parsed) + 9 * 3600
-            dt = datetime.datetime.fromtimestamp(tm).strftime('%Y-%m-%d %H:%M:%S %a')
-
-            title_sjis_bytes = t.encode('cp932', errors="backslashreplace")
-
-            ofs_bytes = 0
-            num_chars = 0
-
-            # タイトルを24dotフォントで表示する場合、折り返しが発生すると表示が重なってしまう。
-            # そのためいい感じのところで行を切り、1行空行を間に挟むようにする。
-            # この時 SJIS にして桁数を計算した上で、元の UTF8 の文字列を該当位置でカットする必要がある。
-            while len(title_sjis_bytes) > 62:
-
-              c = title_sjis_bytes[ ofs_bytes ]
-              if (c >= 0x81 and c <= 0x9f) or (c >= 0xe0 and c <= 0xef):
-                ofs_bytes += 1
-
-              ofs_bytes += 1
-              num_chars += 1
-              if ofs_bytes >= 61:
-                res += f"\n%V%W{t[:num_chars]}\u0018\n"
-                t = t[num_chars:]
-                title_sjis_bytes = title_sjis_bytes[ofs_bytes:]
-                ofs_bytes = 0
-                num_chars = 0
-
-            # 残りのタイトルと日付、本文、横barを出力
-            res += f"""
-%V%W{t}\u0018
-
-
-日付：{dt}
-
-{s}
-
-{HORIZONTAL_BAR}
-"""
-
-          # 最後の記事の後には [EOF] マーカーを出力しておく
-          res += "\n[EOF]\n"
-
-          if verbose:
-            print(f"returned {len(entries)} items.")
-
+        url = request_body_str[13:]
+        res = None
+        if url.startswith("https://dev.zuiki.com/project-z/community"):
+          res = get_zclub_response(url, max_entries)
+        else:
+          res = get_rss_response(url, max_entries)
+        if res:
           respond(port, RESPONSE_OK, res)
-
-        except Exception as e:
-          if verbose:
-            print(f"unknown request [{request_body_str}]")
+        else:
           respond(port, RESPONSE_BAD_REQUEST)
 
+      # unknown request
       else:
-        if verbose:
-          print(f"unknown request [{request_body_str}]")
+        print(f"unknown request [{request_body_str}]")
         respond(port, RESPONSE_BAD_REQUEST)
 
     print("Stopped.")

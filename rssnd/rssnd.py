@@ -7,7 +7,7 @@ import serial
 import requests
 import feedparser
 import subprocess
-import chromedriver_binary
+#import chromedriver_binary
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options

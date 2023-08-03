@@ -135,7 +135,7 @@ def get_zclub_response(url, max_entries):
 
     res = f"""
 
-%V%WZ-CLUB コミュニティサイト
+%V%WX68000Z コミュニティサイト
 
 
       %CUT:+-ZCLUB.CUT

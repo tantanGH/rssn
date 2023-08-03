@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="rssnd",
-    version="0.6.0e1",
+    version="0.6.0",
     author="tantanGH",
     author_email="tantanGH@github",
     license='MIT',

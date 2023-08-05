@@ -354,7 +354,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
         print(f"unknown request [{request_body_str}]")
         respond(port, RESPONSE_BAD_REQUEST)
 
-    driver.close()
+    driver.quit()
 
     print("Stopped.")
 

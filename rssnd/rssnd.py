@@ -119,15 +119,10 @@ def get_rss_response(url, max_entries):
   return res
 
 # get Z-Club response
-def get_zclub_response(url, max_entries):
+def get_zclub_response(driver, url, max_entries):
   
   try:
 
-    opts = Options()
-    opts.add_argument("--headless=new")
-    opts.binary_location = CHROME_BIN
-
-    driver = webdriver.Chrome(CHROME_DRIVER, options=opts)
     driver.get(url)
 
     html = driver.page_source.encode('utf-8')
@@ -197,7 +192,7 @@ Z-CLUBガイドラインを制定しました。Webブラウザからご一読�
 
     res += "\n[EOF]\n"
 
-    driver.quit()
+#    driver.quit()
 
   except Exception as e:
     print(e)
@@ -220,6 +215,12 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
                       xonxoff = False,
                       rtscts = False,
                       dsrdtr = False ) as port:
+
+    opts = Options()
+    opts.add_argument("--headless=new")
+    opts.binary_location = CHROME_BIN
+
+    driver = webdriver.Chrome(CHROME_DRIVER, options=opts)
 
     print(f"Started. (serial_device={serial_device}, serial_baudrate={serial_baudrate})")
 
@@ -340,7 +341,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
         url = request_body_str[13:]
         res = None
         if url.startswith("https://dev.zuiki.com/project-z/community"):
-          res = get_zclub_response(url, max_entries)
+          res = get_zclub_response(driver, url, max_entries)
         else:
           res = get_rss_response(url, max_entries)
         if res:
@@ -353,7 +354,11 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
         print(f"unknown request [{request_body_str}]")
         respond(port, RESPONSE_BAD_REQUEST)
 
+
+    driver.quit()
+
     print("Stopped.")
+
 
 # main
 def main():

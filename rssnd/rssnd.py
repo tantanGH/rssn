@@ -248,7 +248,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
 
       # aborted?
       if prefix != 2:
-        return
+        break
 
       # read request body size (8 byte hex string, 0 padding)
       request_body_size_bytes = port.read(8)

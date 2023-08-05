@@ -37,6 +37,12 @@ def sigint_handler(signum, frame):
   global g_abort_service
   g_abort_service = True
 
+# sigterm handler
+def sigterm_handler(signum, frame):
+  print("Received SIGTERM. Stopping the service.")
+  global g_abort_service
+  g_abort_service = True
+
 # respond
 def respond(port, code, body=""):
 
@@ -205,6 +211,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
 
   # set signal handler
   signal.signal(signal.SIGINT, sigint_handler)
+  signal.signal(signal.SIGTERM, sigterm_handler)
 
   # open serial port
   with serial.Serial( serial_device, serial_baudrate,

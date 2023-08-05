@@ -192,7 +192,7 @@ Z-CLUBガイドラインを制定しました。Webブラウザからご一読�
 
     res += "\n[EOF]\n"
 
-#    driver.quit()
+    driver.close()
 
   except Exception as e:
     print(e)

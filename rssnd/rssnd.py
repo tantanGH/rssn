@@ -192,7 +192,7 @@ Z-CLUBガイドラインを制定しました。Webブラウザからご一読�
 
     res += "\n[EOF]\n"
 
-    driver.close()
+#    driver.close()
 
   except Exception as e:
     print(e)
@@ -354,8 +354,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
         print(f"unknown request [{request_body_str}]")
         respond(port, RESPONSE_BAD_REQUEST)
 
-
-    driver.quit()
+    driver.close()
 
     print("Stopped.")
 

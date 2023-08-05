@@ -206,6 +206,80 @@ Z-CLUBガイドラインを制定しました。Webブラウザからご一読�
 
   return res
 
+# get Yahoo! auction response
+
+def get_yahoo_auction_response(url, max_entries):
+
+  url = 'https://auctions.yahoo.co.jp/category/list/2084039773/?s1=new&o1=d&mod=2&n=50'
+
+  try:
+
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    res = f"""
+%V%WYahoo!オークション
+
+
+       %CUT:+-YAHOOAUC.CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+
+すべてのカテゴリ＞コンピュータ＞パソコン＞「X68000」の商品一覧
+
+新着順
+
+{HORIZONTAL_BAR}
+"""
+  
+    for e in soup.find_all('div', attrs={'class':'Product__detail'}):
+
+      t = e.find('h3').text.strip()
+      price1 = e.find('span', attrs={'class':'Product__priceValue u-textRed'}).text.strip()
+      price2 = e.find('span', attrs={'class':'Product__priceValue'}).text.strip()
+      bids = e.find('span', attrs={'class':'Product__bid'}).text.strip()
+      remain_time = e.find('span', attrs={'class':'Product__time'}).text.strip()
+
+      title_sjis_bytes = t.encode('cp932', errors='backslashreplace')
+
+      ofs_bytes = 0
+      num_chars = 0
+
+      while len(title_sjis_bytes) > 62:
+
+        c = title_sjis_bytes[ ofs_bytes ]
+        if (c >= 0x81 and c <= 0x9f) or (c >= 0xe0 and c <= 0xef):
+          ofs_bytes += 1
+
+        ofs_bytes += 1
+        num_chars += 1
+        if ofs_bytes >= 61:
+          res += f"\n%V%W{t[:num_chars]}\u0018\n"
+          t = t[num_chars:]
+          title_sjis_bytes = title_sjis_bytes[ofs_bytes:]
+          ofs_bytes = 0
+          num_chars = 0
+
+      res += f"""
+%V%W{t}\u0018
+
+
+現在：{price1}    即決：{price2}
+入札：{bids}    残り：{remain_time}
+
+{HORIZONTAL_BAR}
+"""
+
+    res += "\n[EOF]\n"
+
+  except Exception as e:
+    res = None
+
+  return res
+
 # service loop
 def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, alsa_device, use_oled, mcs_wait):
 
@@ -349,6 +423,8 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
         res = None
         if url.startswith("https://dev.zuiki.com/project-z/community"):
           res = get_zclub_response(driver, url, max_entries)
+        elif url.startswith("https://auctions.yahoo.co.jp/"):
+          res = get_yahoo_auction_response(url, max_entries)
         else:
           res = get_rss_response(url, max_entries)
         if res:

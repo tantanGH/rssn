@@ -289,8 +289,7 @@ def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries):
               "token": x68kbbs_token,
               "query": [{ "function": "x68kbbs_test",
                           "command": "get_logs",
-                          "max": max_entries,
-                          "over": "2023-08-05T00:00:00+09:00" }]
+                          "last": max_entries }]
             }
 
     res_bbs = requests.post(url, json=param).json()
@@ -316,8 +315,8 @@ def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries):
 {HORIZONTAL_BAR}
 """
 
-    for e in sorted(res_bbs[0]['return'].items(), reverse=True):
-
+#    for e in sorted(res_bbs[0]['return'].items(), reverse=True):
+    for e in res_bbs[0]['return'].items():
       user_id = e[1]['user_id']
       user_name = e[1]['user_name']
       content = e[1]['content']

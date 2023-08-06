@@ -326,7 +326,7 @@ def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries):
       edited_flag = " (edited)" if edited == "1" else ""
 
       res += f"""
-{user_name} / {user_id}   {dt}
+{dt}  {user_id} {user_name}
 
 {content}{edited_flag}
 

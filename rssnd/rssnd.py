@@ -281,7 +281,7 @@ def get_yahoo_auction_response(url, max_entries):
   return res
 
 # get X68KBBS response
-def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries):
+def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, x68kbbs_board_id, max_entries):
 
   try:
 
@@ -289,6 +289,7 @@ def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries):
               "token": x68kbbs_token,
               "query": [{ "function": "x68kbbs_test",
                           "command": "get_logs",
+                          "board_id": x68kbbs_board_id,
                           "last": max_entries }]
             }
 
@@ -485,7 +486,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, x68kbbs_cl
         elif url.startswith("https://auctions.yahoo.co.jp/"):
           res = get_yahoo_auction_response(url, max_entries)
         elif url.startswith("https://mathlava.com/api/MiyuBot/"):
-          res = get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries)
+          res = get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, "1", 50)
         else:
           res = get_rss_response(url, max_entries)
         if res:

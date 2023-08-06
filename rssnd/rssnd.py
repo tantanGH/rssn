@@ -5,6 +5,7 @@ import datetime
 import signal
 import serial
 import requests
+import json
 import feedparser
 import subprocess
 #import chromedriver_binary
@@ -207,7 +208,6 @@ Z-CLUBガイドラインを制定しました。Webブラウザからご一読�
   return res
 
 # get Yahoo! auction response
-
 def get_yahoo_auction_response(url, max_entries):
 
   url = 'https://auctions.yahoo.co.jp/category/list/2084039773/?s1=new&o1=d&mod=2&n=50'
@@ -267,7 +267,7 @@ def get_yahoo_auction_response(url, max_entries):
 %V%W{t}\u0018
 
 
-現在：{price1}    即決：{price2}
+現在：{price1}
 入札：{bids}    残り：{remain_time}
 
 {HORIZONTAL_BAR}
@@ -280,8 +280,68 @@ def get_yahoo_auction_response(url, max_entries):
 
   return res
 
+# get X68KBBS response
+def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries):
+
+  try:
+
+    param = { "client": x68kbbs_client,
+              "token": x68kbbs_token,
+              "query": [{ "function": "x68kbbs_test",
+                          "command": "get_logs",
+                          "max": max_entries,
+                          "over": "2023-08-05T00:00:00+09:00" }]
+            }
+
+    res_bbs = requests.post(url, json=param).json()
+
+    res = f"""
+%V%WX68KBBS ＃公開雑談
+
+
+       %CUT:+-X68KBBS2.CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+       %CUT
+
+{HORIZONTAL_BAR}
+"""
+
+    for e in sorted(res_bbs[0]['return'].items(), reverse=True):
+
+      user_id = e[1]['user_id']
+      user_name = e[1]['user_name']
+      content = e[1]['content']
+      timestamp = e[1]['timestamp']
+      edited = e[1]['edited']
+      edited_flag = " (edited)" if edited == "1" else ""
+
+      res += f"""
+{user_name} ({user_id})   {timestamp}
+
+{content}{edited_flag}
+
+{HORIZONTAL_BAR}
+"""
+
+    res += "\n[EOF]\n"
+
+  except Exception as e:
+    res = None
+
+  return res
+
 # service loop
-def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, alsa_device, use_oled, mcs_wait):
+def run_service(serial_device, serial_baudrate, max_entries, verbose, x68kbbs_client, x68kbbs_token, pcm_path, alsa_device, use_oled, mcs_wait):
 
   # set signal handler
   signal.signal(signal.SIGINT, sigint_handler)
@@ -425,6 +485,8 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, pcm_path, 
           res = get_zclub_response(driver, url, max_entries)
         elif url.startswith("https://auctions.yahoo.co.jp/"):
           res = get_yahoo_auction_response(url, max_entries)
+        elif url.startswith("https://mathlava.com/api/MiyuBot/"):
+          res = get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries)
         else:
           res = get_rss_response(url, max_entries)
         if res:
@@ -452,6 +514,9 @@ def main():
     parser.add_argument("-e","--entries", help="max item entries", type=int, default=100)
     parser.add_argument("-v","--verbose", help="verbose mode", action='store_true', default=False)
 
+    parser.add_argument("-xc", "--x68kbbs_client", help="x68kbbs api client", default="")
+    parser.add_argument("-xt", "--x68kbbs_token", help="x68kbbs api token", default="")
+
     parser.add_argument("-p", "--pcmpath", help="pcm data path", default=".")
     parser.add_argument("-a", "--alsa", help="alsa device name", default="default")
     parser.add_argument("-o", "--oled", help="oled display", action='store_true')
@@ -459,7 +524,7 @@ def main():
 
     args = parser.parse_args()
 
-    run_service(args.device, args.baudrate, args.entries, args.verbose, args.pcmpath, args.alsa, args.oled, args.mcswait)
+    run_service(args.device, args.baudrate, args.entries, args.verbose, args.x68kbbs_client, args.x68kbbs_token, args.pcmpath, args.alsa, args.oled, args.mcswait)
 
 
 if __name__ == "__main__":

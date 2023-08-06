@@ -321,7 +321,7 @@ def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, max_entries):
       user_name = e[1]['user_name']
       content = e[1]['content']
       timestamp = e[1]['timestamp']
-      dt = datetime.fromisoformat(timestamp)
+      dt = datetime.fromisoformat(timestamp).strftime("%Y-%m-%d %H:%M:%S")
       edited = e[1]['edited']
       edited_flag = " (edited)" if edited == "1" else ""
 

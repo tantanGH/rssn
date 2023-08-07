@@ -462,9 +462,9 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, x68kbbs_cl
             if request_path[-4:].lower() == ".mcs":
               time.sleep(mcs_wait / 1000.0)
             if use_oled:
-              s44rasp_proc = subprocess.Popen(["s44rasp", "-d", alsa_device, "-o", pcm_file_name], shell=False)
+              s44rasp_proc = subprocess.Popen(["s44rasp", "-q", "-d", alsa_device, "-o", pcm_file_name], shell=False)
             else:
-              s44rasp_proc = subprocess.Popen(["s44rasp", "-d", alsa_device, pcm_file_name], shell=False)
+              s44rasp_proc = subprocess.Popen(["s44rasp", "-q", "-d", alsa_device, pcm_file_name], shell=False)
           else:
             respond(port, RESPONSE_NOT_FOUND, "file not found.")
 

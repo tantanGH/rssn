@@ -294,9 +294,10 @@ def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, x68kbbs_board_id, m
             }
 
     res_bbs = requests.post(url, json=param).json()
+    board_name = res_bbs[0]['return'][x68kbbs_board_id]['board_name']
 
     res = f"""
-%V%WX68KBBS ＃公開雑談
+%V%WX68KBBS ＃{board_name}
 
 
        %CUT:+-X68KBBS2.CUT

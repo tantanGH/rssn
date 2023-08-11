@@ -316,7 +316,7 @@ def get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, x68kbbs_board_id, m
 {HORIZONTAL_BAR}
 """
 
-    for e in res_bbs[0]['return']['1']['board_logs'].items():
+    for e in res_bbs[0]['return'][x68kbbs_board_id]['board_logs'].items():
       user_id = e[1]['user_id']
       user_name = e[1]['user_name']
       content = e[1]['content']

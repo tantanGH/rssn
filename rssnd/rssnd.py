@@ -487,7 +487,7 @@ def run_service(serial_device, serial_baudrate, max_entries, verbose, x68kbbs_cl
         elif url.startswith("https://auctions.yahoo.co.jp/"):
           res = get_yahoo_auction_response(url, max_entries)
         elif url.startswith("https://mathlava.com/api/MiyuBot/"):
-          res = get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, "2", 50)
+          res = get_x68kbbs_response(url, x68kbbs_client, x68kbbs_token, "1", 50)
         else:
           res = get_rss_response(url, max_entries)
         if res:
